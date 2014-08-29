@@ -12,5 +12,17 @@
         </resource-bundle>
         <message-bundle>JSF-override</message-bundle>
 	</application>
+	
+	<managed-bean>
+		<managed-bean-name>userInfoBackingBean</managed-bean-name>
+		<managed-bean-class>com.haochi.facade.backingbean.userinfo.UserInfoBackingBean</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>	
+	
+	<managed-bean>
+		<managed-bean-name>userRegisterBackingBean</managed-bean-name>
+		<managed-bean-class>com.haochi.facade.backingbean.userinfo.UserRegisterBackingBean</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>	
 
 </faces-config>

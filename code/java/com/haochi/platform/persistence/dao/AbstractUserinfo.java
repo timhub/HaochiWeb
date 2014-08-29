@@ -45,7 +45,7 @@ public abstract class AbstractUserinfo implements java.io.Serializable {
 		this.userphone = userphone;
 		this.usertype = usertype;
 		this.usergenda = usergenda;
-		this.usermailbox = usermailbox;
+		this.setUsermailbox(usermailbox);
 	}
 
 	// Property accessors
@@ -104,6 +104,14 @@ public abstract class AbstractUserinfo implements java.io.Serializable {
 
 	public void setUsergenda(Integer usergenda) {
 		this.usergenda = usergenda;
+	}
+
+	public String getUsermailbox() {
+		return usermailbox;
+	}
+
+	public void setUsermailbox(String usermailbox) {
+		this.usermailbox = usermailbox;
 	}
 
 }

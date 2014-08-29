@@ -1,0 +1,92 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+  				xmlns:ui="http://java.sun.com/jsf/facelets"
+			    xmlns:h="http://java.sun.com/jsf/html"
+			    xmlns:f="http://java.sun.com/jsf/core"
+			    xmlns:ice="http://www.icesoft.com/icefaces/component">
+	
+	<ui:define name="register_overlay"/>
+	<ui:param name="backingBean" value="#{userRegisterBackingBean}"/>
+	
+	<ice:panelGroup styleClass="overlay" rendered="#{backingBean.showOverlay}">
+		<ice:panelGroup id="registerbox" styleClass="hard_shaddow margin_auto grid4 hight1 white_bg margin_top160 padding25">
+			<ice:outputText value="#{msgs.regi_title}" styleClass="title_text"/>
+			<ice:form id="register_form" partialSubmit="false">
+				<ice:panelGroup styleClass="float_left margin_top25 text_left" >
+					<table>
+						<tr>
+							<td>
+								<ice:outputText value="#{msgs.regi_mailbox}"/>
+							</td>
+							<td>
+								<ice:inputText styleClass="form-control grid3 margin_auto input-sm" 
+									value="#{backingBean.usermailbox}"/>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<ice:outputText value="#{msgs.regi_username}"/>
+							</td>
+							<td>
+								<ice:inputText styleClass="form-control grid3 margin_auto input-sm" 
+									value="#{backingBean.username}"/>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<ice:outputText value="#{msgs.regi_password}"/>
+							</td>
+							<td>
+								<ice:inputSecret styleClass="form-control grid3 margin_auto input-sm" 
+									value="#{backingBean.userpass}"/>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<ice:outputText value="#{msgs.regi_passwordconfirm}"/>
+							</td>
+							<td>
+								<ice:inputSecret styleClass="form-control grid3 margin_auto input-sm" 
+									value="#{backingBean.userpassConfirm}"/>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<ice:outputText value="#{msgs.regi_phone}"/>
+							</td>
+							<td>
+								<ice:inputText styleClass="form-control grid3 margin_auto input-sm" 
+									value="#{backingBean.userphone}"/>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<ice:outputText value="#{msgs.regi_genda}"/>
+							</td>
+							<td>
+								<ice:inputText styleClass="form-control grid3 margin_auto input-sm" 
+									value="#{backingBean.usergenda}"/>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<ice:outputText value="#{msgs.regi_address}"/>
+							</td>
+							<td>
+								<ice:inputTextarea styleClass="form-control input-sm" value="#{backingBean.useraddress}"/>
+							</td>
+						</tr>
+					</table>
+				</ice:panelGroup>
+				<br/>
+				<br/>
+				<ice:panelGroup styleClass="margin_bottom0 float_right grid5">
+					<ice:commandButton value="#{msgs.confirm_text}" styleClass="btn btn-primary" 
+							action="#{backingBean.registerUser}"/>
+					<ice:commandButton value="#{msgs.cancel_text}" styleClass="float_right btn btn-default margin_left60" 
+							action="#{backingBean.hideOverlay}"/>
+				</ice:panelGroup>
+			</ice:form>
+		</ice:panelGroup>
+	</ice:panelGroup>
+
+</ui:composition>

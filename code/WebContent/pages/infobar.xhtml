@@ -1,0 +1,38 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+  				xmlns:ui="http://java.sun.com/jsf/facelets"
+			    xmlns:h="http://java.sun.com/jsf/html"
+			    xmlns:f="http://java.sun.com/jsf/core"
+			    xmlns:ice="http://www.icesoft.com/icefaces/component"
+			    xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
+			    
+	<ui:define name="infobar"/>
+	<ui:param name="backingBean" value="#{userInfoBackingBean}"/>
+	
+	<ice:panelGroup styleClass="container marketing">
+		<ice:panelGroup id="infobar" styleClass="row">
+			<ice:panelGroup styleClass="col-lg-4 text_center" rendered="#{!backingBean.isLoggedOn}">
+				<h3 class="main_color">
+					#{msgs.login_title}
+				</h3>
+					
+				<ice:form id="login_form" partialSubmit="true">
+					<ice:inputText value="#{backingBean.inputName}" styleClass="form-control grid3 margin_auto input-sm"/>
+					<br/>
+					<ice:inputSecret value="#{backingBean.inputPass}" styleClass="form-control grid3 margin_auto input-sm"/>
+					<br/>
+					<ice:commandButton value="#{msgs.login_log_text}" styleClass="btn btn-primary" 
+						action="#{backingBean.userLogin}"/>
+					<ice:commandButton value="#{msgs.login_register}" styleClass="btn btn-info margin_left60"
+						action="#{userRegisterBackingBean.displayOverlay}"/>
+				</ice:form>
+			</ice:panelGroup>
+			<ice:panelGroup rendered="#{backingBean.isLoggedOn}">
+				<h3 class="main_color">
+					#{msgs.login_welcome}
+				</h3>
+				<br/>
+			</ice:panelGroup>
+		</ice:panelGroup>
+	</ice:panelGroup>
+	
+</ui:composition>

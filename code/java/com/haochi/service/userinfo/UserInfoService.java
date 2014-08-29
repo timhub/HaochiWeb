@@ -29,6 +29,19 @@ public class UserInfoService {
 		userInfoDao.save(instance);
 	}
 	
+	public void addNewUser( String username, String userpass, String useraddress, String userphone,
+			Integer usergenda, String usermailbox) {
+		Userinfo newUser = new Userinfo();
+		newUser.setUseraddress(useraddress);
+		newUser.setUsergenda(usergenda);
+		newUser.setUsermailbox(usermailbox);
+		newUser.setUsername(username);
+		newUser.setUserpass(userpass);
+		newUser.setUserphone(userphone);
+		
+		addNewUser(newUser);
+	}
+	
 	/**
 	 * Update current User.
 	 * @param instance
