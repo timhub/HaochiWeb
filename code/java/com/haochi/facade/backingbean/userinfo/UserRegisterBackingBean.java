@@ -10,7 +10,6 @@ public class UserRegisterBackingBean extends BaseBackingBean
 	
 	private static final long serialVersionUID = -1855361291223010915L;
 	
-	private boolean showOverlay;
 	private String username;
 	private String userpass;
 	private String userpassConfirm;
@@ -19,6 +18,7 @@ public class UserRegisterBackingBean extends BaseBackingBean
 	private Integer usergenda;
 	private String usermailbox;
 	
+	private boolean showOverlay;
 	private boolean inputValidation;
 
 	public UserRegisterBackingBean() {
@@ -46,10 +46,11 @@ public class UserRegisterBackingBean extends BaseBackingBean
 	 * Main function for register user to the system.
 	 */
 	public void registerUser() {
-		if(inputValidation) {
+		//TODO currently no genda data.
+//		if(inputValidation) {
 			UserInfoService service = new UserInfoService();
-			service.addNewUser(username, userpass, useraddress, userphone, usergenda, usermailbox);
-		}
+			service.addNewUser(username, userpass, useraddress, userphone, 1, usermailbox);
+//		}
 	}
 	
 	/**

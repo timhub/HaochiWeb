@@ -1,10 +1,14 @@
 package com.haochi.facade.backingbean.userinfo;
 
+import java.io.Serializable;
+
 import com.haochi.facade.backingbean.BaseBackingBean;
-import com.haochi.platform.persistence.dao.Userinfo;
+import com.haochi.platform.persistence.dao.userinfo.Userinfo;
 import com.haochi.service.userinfo.UserInfoService;
 
-public class UserInfoBackingBean extends BaseBackingBean {
+public class UserInfoBackingBean extends BaseBackingBean implements Serializable{
+	
+	private static final long serialVersionUID = -5862099643402886795L;
 	
 	private Userinfo user;
 	private String inputName;

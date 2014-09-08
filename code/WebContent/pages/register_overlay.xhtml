@@ -63,8 +63,12 @@
 								<ice:outputText value="#{msgs.regi_genda}"/>
 							</td>
 							<td>
-								<ice:inputText styleClass="form-control grid3 margin_auto input-sm" 
-									value="#{backingBean.usergenda}"/>
+								<ice:menuBar>
+									<ice:menuItem>
+										<ice:menuItem value="#{msgs.regi_genda_male}"/>
+										<ice:menuItem value="#{msgs.regi_genda_female}"/>
+									</ice:menuItem>
+								</ice:menuBar>
 							</td>
 						</tr>
 						<tr>
@@ -72,14 +76,14 @@
 								<ice:outputText value="#{msgs.regi_address}"/>
 							</td>
 							<td>
-								<ice:inputTextarea styleClass="form-control input-sm" value="#{backingBean.useraddress}"/>
+								<ice:inputTextarea styleClass="not_resize form-control input-sm" value="#{backingBean.useraddress}"/>
 							</td>
 						</tr>
 					</table>
 				</ice:panelGroup>
 				<br/>
 				<br/>
-				<ice:panelGroup styleClass="margin_bottom0 float_right grid5">
+				<ice:panelGroup styleClass="margin_top25 float_right grid5">
 					<ice:commandButton value="#{msgs.confirm_text}" styleClass="btn btn-primary" 
 							action="#{backingBean.registerUser}"/>
 					<ice:commandButton value="#{msgs.cancel_text}" styleClass="float_right btn btn-default margin_left60" 

@@ -1,7 +1,7 @@
 package com.haochi.service.userinfo;
 
-import com.haochi.platform.persistence.dao.UserinfoDAO;
-import com.haochi.platform.persistence.dao.Userinfo;
+import com.haochi.platform.persistence.dao.userinfo.Userinfo;
+import com.haochi.platform.persistence.dao.userinfo.UserinfoDAO;
 
 /**
  * The service functionalitiy for user data operations. This service gethered 
@@ -38,6 +38,9 @@ public class UserInfoService {
 		newUser.setUsername(username);
 		newUser.setUserpass(userpass);
 		newUser.setUserphone(userphone);
+		
+		//TODO add logic for user type
+		newUser.setUsertype(1);
 		
 		addNewUser(newUser);
 	}

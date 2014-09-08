@@ -22,17 +22,17 @@
 			HaochiDB
 		</property>
 		<mapping
-			resource="com/haochi/platform/persistence/dao/Order.hbm.xml" />
+			resource="com/haochi/platform/persistence/dao/order/Order.hbm.xml" />
 		<mapping
-			resource="com/haochi/platform/persistence/dao/Schedule.hbm.xml" />
+			resource="com/haochi/platform/persistence/dao/schedule/Schedule.hbm.xml" />
 		<mapping
-			resource="com/haochi/platform/persistence/dao/Doctorinfo.hbm.xml" />
+			resource="com/haochi/platform/persistence/dao/doctorinfo/Doctorinfo.hbm.xml" />
 		<mapping
-			resource="com/haochi/platform/persistence/dao/Treathistory.hbm.xml" />
+			resource="com/haochi/platform/persistence/dao/treathistory/Treathistory.hbm.xml" />
 		<mapping
-			resource="com/haochi/platform/persistence/dao/Userinfo.hbm.xml" />
+			resource="com/haochi/platform/persistence/dao/userinfo/Userinfo.hbm.xml" />
 		<mapping
-			resource="com/haochi/platform/persistence/dao/Leaveapplication.hbm.xml" />
+			resource="com/haochi/platform/persistence/dao/leave/Leaveapplication.hbm.xml" />
 
 	</session-factory>
 

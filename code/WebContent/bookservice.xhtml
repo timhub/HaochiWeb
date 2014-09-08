@@ -1,0 +1,21 @@
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ice="http://www.icesoft.com/icefaces/component">
+      
+	   <ui:composition template="/common/pageTemplate.xhtml">
+	   	<ui:define name="content">
+	   	
+		   	<ice:panelGroup>
+		   		<ui:include src="/pages/header.xhtml"/>
+		   	</ice:panelGroup>
+		   	
+		   	<ice:panelGroup>
+		   		<ui:include src="/pages/docselect.xhtml"/>
+		   	</ice:panelGroup>
+		   	
+	   	
+	   	</ui:define>
+	   </ui:composition>
+</f:view>

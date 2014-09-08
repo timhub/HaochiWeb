@@ -24,5 +24,17 @@
 		<managed-bean-class>com.haochi.facade.backingbean.userinfo.UserRegisterBackingBean</managed-bean-class>
 		<managed-bean-scope>view</managed-bean-scope>
 	</managed-bean>	
+	
+	<managed-bean>
+		<managed-bean-name>bookServiceBackingBean</managed-bean-name>
+		<managed-bean-class>com.haochi.facade.backingbean.bookservice.BookServiceBackingBean</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>	
+	
+	<managed-bean>
+		<managed-bean-name>selectionServiceBackingBean</managed-bean-name>
+		<managed-bean-class>com.haochi.facade.backingbean.selection.SelectFunctionBackingBean</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>	
 
 </faces-config>
