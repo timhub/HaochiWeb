@@ -1,5 +1,6 @@
 package com.haochi.service.utility;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -9,7 +10,7 @@ import java.util.Date;
  *
  * @author Tim
  */
-public class DateUtility {
+public class DateUtility implements Serializable{
 	
 	static DateUtility instance = null;
 	

@@ -1,16 +1,15 @@
 package com.haochi.facade.backingbean.bookservice;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
+
+import javax.faces.context.FacesContext;
 
 import com.haochi.facade.backingbean.BaseBackingBean;
-import com.haochi.platform.persistence.dao.doctorinfo.Doctorinfo;
+import com.haochi.facade.backingbean.selection.SelectFunctionBackingBean;
 import com.haochi.platform.persistence.dao.order.Order;
 import com.haochi.service.utility.CommonConstants;
 import com.haochi.service.utility.DateUtility;
-import com.haochi.service.utility.SelectionHandler;
 
 /**
  * This class controls the logic for booking services. It loaded all the date cells and display the
@@ -22,29 +21,17 @@ public class BookServiceBackingBean extends BaseBackingBean implements Serializa
 
 	private static final long serialVersionUID = -1892860394801931271L;
 	
-	private OrderWeekView[] monthlyViewList = {};
+	public OrderWeekView[] weekViewList = new OrderWeekView[5];
 	private String selectedDate;
 	private DateUtility dateUtil;
-	private SelectionHandler selection;
-	private boolean selectionAllSet;
 	
 	private Integer selectMonth;
 	private Integer monthOffset;
 	
-	private Integer doctorId;
-	private Integer treatmentId;
-	
-	private List<Doctorinfo> docList;
-	
 	public BookServiceBackingBean() {
 		dateUtil = DateUtility.getInstance();
-		selection = SelectionHandler.getInstance();
 		
-		doctorId = selection.getDocId();
-		treatmentId = selection.getTreatmentId();
-		docList = new ArrayList<Doctorinfo>();
 		setMonthOffset(0);
-		checkSelection();
 		initialDateGrid();
 	}
 	
@@ -53,24 +40,26 @@ public class BookServiceBackingBean extends BaseBackingBean implements Serializa
 	 * data within each day.
 	 */
 	public void initialDateGrid() {
-		int maxDateCount = 0;
 		int maxWeekCount = 0;
 		int loadedWeek = 0;
-		int loadedDay = 0;
 		Calendar calendar = null;
 		
-		if(selectionAllSet) {
-			calendar = dateUtil.getCalendar();
-			//Get selected month by offset.
-			calendar.add(Calendar.MONTH, monthOffset);
-			
-			maxDateCount = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
-			maxWeekCount = calendar.getActualMaximum(Calendar.WEEK_OF_MONTH);
-		}
+//		SelectFunctionBackingBean selectBacBean = (SelectFunctionBackingBean) FacesContext.getCurrentInstance().getApplication()
+//				.getELResolver().getValue(FacesContext.getCurrentInstance().getELContext(), 
+//						null, "selectionServiceBackingBean");
+		
+		
+		calendar = dateUtil.getCalendar();
+		calendar.setTime(dateUtil.getCurrentDate());
+		//Get selected month by offset.
+		calendar.add(Calendar.MONTH, monthOffset);
+		calendar.set(Calendar.DATE, 1);
+		maxWeekCount = calendar.getActualMaximum(Calendar.WEEK_OF_MONTH);
 		
 		while(loadedWeek < maxWeekCount) {
-			OrderWeekView week = new OrderWeekView();
+			OrderWeekView week;
 			if(loadedWeek == 0) {
+				week = new OrderWeekView();
 				int daysInFirstWeek = dateUtil.getDaysInFirstWeek();
 				int startDay = CommonConstants.MAX_DAYS_IN_WEEK - daysInFirstWeek;
 				OrderDayView[] dayViewList = new OrderDayView[7];
@@ -80,23 +69,26 @@ public class BookServiceBackingBean extends BaseBackingBean implements Serializa
 				for(int i = startDay; i < CommonConstants.MAX_DAYS_IN_WEEK; i ++) {
 					OrderDayView dayView = initialDay();
 					dayViewList[i] = dayView;
-					dateUtil.getCalendar().add(Calendar.DAY_OF_MONTH, 1);
-					loadedDay ++;
+					calendar.add(Calendar.DAY_OF_MONTH, 1);
 				}
-				week.setWeekOrderList(dayViewList);
+				week.setDayOrderList(dayViewList);
+				weekViewList[loadedWeek] = week;
 				loadedWeek ++;
 			} else {
+				week = new OrderWeekView();
 				OrderDayView[] dayViewList = new OrderDayView[7];
 				for(int i = 0; i < CommonConstants.MAX_DAYS_IN_WEEK; i ++) {
-					if(loadedDay > maxDateCount){
+					if(calendar.get(Calendar.DAY_OF_MONTH) == 1){
 						break;
 					} else {
 						OrderDayView dayView = initialDay();
 						dayViewList[i] = dayView;
 						dateUtil.getCalendar().add(Calendar.DAY_OF_MONTH, 1);
-						loadedDay ++;
 					}
 				}
+				week.setDayOrderList(dayViewList);
+				weekViewList[loadedWeek] = week;
+				loadedWeek++;
 			}
 		}
 	}
@@ -119,8 +111,9 @@ public class BookServiceBackingBean extends BaseBackingBean implements Serializa
 	
 	/**
 	 * Checking out all the orders within the <b>current month</b>.
+	 * Select the orders by userId, docId, treatId and time period.
 	 */
-	private void loadAllOrdersFromDB() {
+	public void loadAllOrdersFromDB() {
 		
 	}
 	
@@ -131,29 +124,6 @@ public class BookServiceBackingBean extends BaseBackingBean implements Serializa
 		
 	}
 	
-	/**
-	 * Check the condition of the page selection, the date table could only be shown when
-	 * user finish the doctor and treatment selection.
-	 */
-	private void checkSelection() {
-		if(doctorId != CommonConstants.NON_AVALIABLE_CODE 
-				&& treatmentId != CommonConstants.NON_AVALIABLE_CODE ) {
-			selectionAllSet = true;
-		} else {
-			selectionAllSet = false;
-		}
-	}
-	
-	
-	
-	/**
-	 * Clean the selection after operations.
-	 */
-	private void cleanSelection() {
-		selection.setDocId(-1);
-		selection.setTreatmentId(-1);
-	}
-
 	public Integer getSelectMonth() {
 		return selectMonth;
 	}
@@ -170,12 +140,12 @@ public class BookServiceBackingBean extends BaseBackingBean implements Serializa
 		this.selectedDate = selectedDate;
 	}
 
-	public OrderWeekView[] getMonthlyViewList() {
-		return monthlyViewList;
+	public OrderWeekView[] getWeekViewList() {
+		return weekViewList;
 	}
 
-	public void setMonthlyViewList(OrderWeekView[] monthlyViewList) {
-		this.monthlyViewList = monthlyViewList;
+	public void setWeekViewList(OrderWeekView[] monthlyViewList) {
+		this.weekViewList = monthlyViewList;
 	}
 
 	public Integer getMonthOffset() {

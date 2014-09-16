@@ -1,0 +1,25 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+  				xmlns:ui="http://java.sun.com/jsf/facelets"
+			    xmlns:h="http://java.sun.com/jsf/html"
+			    xmlns:f="http://java.sun.com/jsf/core"
+			    xmlns:ice="http://www.icesoft.com/icefaces/component">
+			    
+	<ui:define name="booktable"/>
+	<ui:param name="backingBean" value="#{bookServiceBackingBean}"/>
+	
+	<ice:form id="book_table">
+		<ice:panelGroup styleClass="container margin_top50">
+			<table>
+				<ui:repeat varStatus="status" var="weekItem" value="#{backingBean.weekViewList}">
+					<tr>
+						<ui:repeat varStatus="innerstatus" var="dayItem" value="#{weekItem.dayOrderList}">
+							<td>
+								<ice:outputText value="#{dayItem.dateText}"/>
+							</td>
+						</ui:repeat>
+					</tr>
+				</ui:repeat>
+			</table>
+		</ice:panelGroup>
+	</ice:form>
+</ui:composition>

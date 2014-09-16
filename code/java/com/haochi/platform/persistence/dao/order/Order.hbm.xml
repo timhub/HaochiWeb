@@ -22,9 +22,6 @@
         <property name="orderstartblock" type="java.lang.Integer">
             <column name="orderstartblock" not-null="true" />
         </property>
-        <property name="orderendblock" type="java.lang.Integer">
-            <column name="orderendblock" not-null="true" />
-        </property>
         <property name="ordertreatmentid" type="java.lang.String">
             <column name="ordertreatmentid" length="45" not-null="true" />
         </property>

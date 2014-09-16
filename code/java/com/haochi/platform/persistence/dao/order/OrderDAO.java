@@ -28,7 +28,6 @@ public class OrderDAO extends BaseHibernateDAO {
 	public static final String ORDERDOCID = "orderdocid";
 	public static final String ORDERDATE = "orderdate";
 	public static final String ORDERSTARTBLOCK = "orderstartblock";
-	public static final String ORDERENDBLOCK = "orderendblock";
 	public static final String ORDERTREATMENTID = "ordertreatmentid";
 
 	public void save(Order transientInstance) {
@@ -101,7 +100,7 @@ public class OrderDAO extends BaseHibernateDAO {
 	 * @param endTime
 	 * @return
 	 */
-	public List findByTimeSpans(String startTime, String endTime) {
+	public List findByMonthView(String startTime, String endTime) {
 		log.debug("finding all the orders between " + startTime + ", " + endTime);
 		try {
 			String queryString = "from Order as model where model."
@@ -130,10 +129,6 @@ public class OrderDAO extends BaseHibernateDAO {
 
 	public List findByOrderstartblock(Object orderstartblock) {
 		return findByProperty(ORDERSTARTBLOCK, orderstartblock);
-	}
-
-	public List findByOrderendblock(Object orderendblock) {
-		return findByProperty(ORDERENDBLOCK, orderendblock);
 	}
 
 	public List findByOrdertreatmentid(Object ordertreatmentid) {

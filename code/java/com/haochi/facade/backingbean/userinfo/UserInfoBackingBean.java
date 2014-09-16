@@ -40,7 +40,9 @@ public class UserInfoBackingBean extends BaseBackingBean implements Serializable
 		}
 	}
 	
-	
+	public String toBookPage() {
+		return "book";
+	}
 
 	public Userinfo getUser() {
 		return user;

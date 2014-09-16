@@ -1,5 +1,7 @@
 package com.haochi.service.utility;
 
+import java.io.Serializable;
+
 /**
  * Restore the selection data for book service.
  * Default value for ids are <b>-1</b> and it's not bounded with
@@ -9,26 +11,20 @@ package com.haochi.service.utility;
  *
  * @author Tim
  */
-public class SelectionHandler {
+public class SelectionHandler implements Serializable{
 	
-	private static SelectionHandler instance;
+	private static final long serialVersionUID = -5552657327877239205L;
 	
 	private Integer docId;
 	private Integer treatmentId;
-	
-	public static SelectionHandler getInstance() {
-		if(instance == null) {
-			instance = new SelectionHandler();
-		} 
-		return instance;
-	}
+	private boolean selectionAllSet;
 	
 	/**
 	 * Set default value of the ids as -1.
 	 */
 	public SelectionHandler() {
 		docId = CommonConstants.NON_AVALIABLE_CODE;
-		treatmentId = CommonConstants.NON_AVALIABLE_CODE ;
+		treatmentId = CommonConstants.NON_AVALIABLE_CODE;
 	}
 
 	public Integer getDocId() {
@@ -37,6 +33,10 @@ public class SelectionHandler {
 
 	public void setDocId(Integer docId) {
 		this.docId = docId;
+		if (this.docId != CommonConstants.NON_AVALIABLE_CODE
+				&& this.treatmentId != CommonConstants.NON_AVALIABLE_CODE) {
+			this.selectionAllSet = true;
+		}
 	}
 
 	public Integer getTreatmentId() {
@@ -45,6 +45,18 @@ public class SelectionHandler {
 
 	public void setTreatmentId(Integer treatmentId) {
 		this.treatmentId = treatmentId;
+		if (this.docId != CommonConstants.NON_AVALIABLE_CODE
+				&& this.treatmentId != CommonConstants.NON_AVALIABLE_CODE) {
+			this.selectionAllSet = true;
+		}
+	}
+
+	public boolean isSelectionAllSet() {
+		return selectionAllSet;
+	}
+
+	public void setSelectionAllSet(boolean selectionAllSet) {
+		this.selectionAllSet = selectionAllSet;
 	}
 
 }

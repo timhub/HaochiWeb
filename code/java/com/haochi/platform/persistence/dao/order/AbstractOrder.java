@@ -18,7 +18,6 @@ public abstract class AbstractOrder implements java.io.Serializable {
 	private Integer orderdocid;
 	private Date orderdate;
 	private Integer orderstartblock;
-	private Integer orderendblock;
 	private String ordertreatmentid;
 
 	// Constructors
@@ -30,13 +29,12 @@ public abstract class AbstractOrder implements java.io.Serializable {
 	/** full constructor */
 	public AbstractOrder(Integer orderid, Integer orderuserid,
 			Integer orderdocid, Date orderdate, Integer orderstartblock,
-			Integer orderendblock, String ordertreatmentid) {
+			String ordertreatmentid) {
 		this.orderid = orderid;
 		this.orderuserid = orderuserid;
 		this.orderdocid = orderdocid;
 		this.orderdate = orderdate;
 		this.orderstartblock = orderstartblock;
-		this.orderendblock = orderendblock;
 		this.ordertreatmentid = ordertreatmentid;
 	}
 
@@ -80,14 +78,6 @@ public abstract class AbstractOrder implements java.io.Serializable {
 
 	public void setOrderstartblock(Integer orderstartblock) {
 		this.orderstartblock = orderstartblock;
-	}
-
-	public Integer getOrderendblock() {
-		return this.orderendblock;
-	}
-
-	public void setOrderendblock(Integer orderendblock) {
-		this.orderendblock = orderendblock;
 	}
 
 	public String getOrdertreatmentid() {
