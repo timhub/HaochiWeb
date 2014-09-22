@@ -9,11 +9,11 @@
 	
 	<ice:form id="book_table">
 		<ice:panelGroup styleClass="container margin_top50">
-			<table>
+			<table style="border-top:none;border-bottom: none;border-left: none;border-right: none;">
 				<ui:repeat varStatus="status" var="weekItem" value="#{backingBean.weekViewList}">
 					<tr>
 						<ui:repeat varStatus="innerstatus" var="dayItem" value="#{weekItem.dayOrderList}">
-							<td>
+							<td class="#{(status.index == 0)?'':'border_top'}">
 								<ice:outputText value="#{dayItem.dateText}"/>
 							</td>
 						</ui:repeat>

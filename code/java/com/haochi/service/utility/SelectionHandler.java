@@ -2,6 +2,8 @@ package com.haochi.service.utility;
 
 import java.io.Serializable;
 
+import org.icefaces.application.PushRenderer;
+
 /**
  * Restore the selection data for book service.
  * Default value for ids are <b>-1</b> and it's not bounded with
@@ -37,6 +39,7 @@ public class SelectionHandler implements Serializable{
 				&& this.treatmentId != CommonConstants.NON_AVALIABLE_CODE) {
 			this.selectionAllSet = true;
 		}
+		PushRenderer.render("booktable");
 	}
 
 	public Integer getTreatmentId() {
@@ -49,6 +52,7 @@ public class SelectionHandler implements Serializable{
 				&& this.treatmentId != CommonConstants.NON_AVALIABLE_CODE) {
 			this.selectionAllSet = true;
 		}
+		PushRenderer.render("booktable");
 	}
 
 	public boolean isSelectionAllSet() {

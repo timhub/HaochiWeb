@@ -2,12 +2,18 @@ package com.haochi.facade.backingbean.bookservice;
 
 import java.io.Serializable;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
 
 import com.haochi.facade.backingbean.BaseBackingBean;
 import com.haochi.facade.backingbean.selection.SelectFunctionBackingBean;
 import com.haochi.platform.persistence.dao.order.Order;
+import com.haochi.platform.persistence.dao.userinfo.Userinfo;
+import com.haochi.service.order.BookService;
+import com.haochi.service.userinfo.UserInfoService;
 import com.haochi.service.utility.CommonConstants;
 import com.haochi.service.utility.DateUtility;
 
@@ -28,8 +34,21 @@ public class BookServiceBackingBean extends BaseBackingBean implements Serializa
 	private Integer selectMonth;
 	private Integer monthOffset;
 	
+	SelectFunctionBackingBean selectBacBean;
+	
+	private Userinfo currentUser;
+	
 	public BookServiceBackingBean() {
+		UserInfoService service = new UserInfoService();
 		dateUtil = DateUtility.getInstance();
+		selectBacBean = (SelectFunctionBackingBean) FacesContext.getCurrentInstance().getApplication()
+				.getELResolver().getValue(FacesContext.getCurrentInstance().getELContext(), 
+						null, "selectionServiceBackingBean");
+		//Get current login user.
+		HttpSession session  = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
+		if(session != null) {
+			currentUser = service.findUserByName((String)session.getAttribute("username"));
+		}
 		
 		setMonthOffset(0);
 		initialDateGrid();
@@ -43,11 +62,6 @@ public class BookServiceBackingBean extends BaseBackingBean implements Serializa
 		int maxWeekCount = 0;
 		int loadedWeek = 0;
 		Calendar calendar = null;
-		
-//		SelectFunctionBackingBean selectBacBean = (SelectFunctionBackingBean) FacesContext.getCurrentInstance().getApplication()
-//				.getELResolver().getValue(FacesContext.getCurrentInstance().getELContext(), 
-//						null, "selectionServiceBackingBean");
-		
 		
 		calendar = dateUtil.getCalendar();
 		calendar.setTime(dateUtil.getCurrentDate());
@@ -91,6 +105,7 @@ public class BookServiceBackingBean extends BaseBackingBean implements Serializa
 				loadedWeek++;
 			}
 		}
+		loadOrdersFromDB();
 	}
 	
 	/**
@@ -113,8 +128,28 @@ public class BookServiceBackingBean extends BaseBackingBean implements Serializa
 	 * Checking out all the orders within the <b>current month</b>.
 	 * Select the orders by userId, docId, treatId and time period.
 	 */
-	public void loadAllOrdersFromDB() {
-		
+	public void loadOrdersFromDB() {
+		BookService service = new BookService();
+		if(selectBacBean.isSelectionAllSet()) {
+			List<Order> orderList = service.getOrderInCurrentMonth(selectBacBean.getSelectedDocId(), 
+					selectBacBean.getSelectedTreatId());
+			for (int i = 0; i < weekViewList.length; i++) {
+				for (int j = 0; j < weekViewList[i].getDayOrderList().length; j++) {
+					for (Order order : orderList) {
+						if(weekViewList[i].getDayOrderList()[j] != null) {
+							Date targetDate = weekViewList[i].getDayOrderList()[j].getDayOrderList()[0].getOrderdate();
+							if(DateUtility.isSameDate(targetDate, order.getOrderdate())){
+								Order targetOrder = weekViewList[i].getDayOrderList()[j]
+										.getDayOrderList()[order.getOrderstartblock()];
+								targetOrder.setOrderdocid(order.getOrderdocid());
+								targetOrder.setOrdertreatmentid(order.getOrdertreatmentid());
+								targetOrder.setOrderuserid(order.getOrderuserid());
+							}
+						}
+					}
+				}
+			}
+		}
 	}
 	
 	/**

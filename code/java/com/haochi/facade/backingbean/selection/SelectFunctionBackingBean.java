@@ -91,7 +91,7 @@ public class SelectFunctionBackingBean implements Serializable {
 		FacesContext context = FacesContext.getCurrentInstance();
 		BookServiceBackingBean backingBean = (BookServiceBackingBean)context.getApplication().getELResolver()
 				.getValue(context.getELContext(), null, "bookServiceBackingBean");
-		backingBean.loadAllOrdersFromDB();
+		backingBean.loadOrdersFromDB();
 	}
 	
 	private void updateSelectionCondition() {

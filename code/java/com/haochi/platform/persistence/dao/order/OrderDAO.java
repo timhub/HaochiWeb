@@ -1,10 +1,13 @@
 package com.haochi.platform.persistence.dao.order;
 
+import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.beanutils.converters.SqlDateConverter;
 import org.hibernate.LockOptions;
 import org.hibernate.Query;
 import org.hibernate.criterion.Example;
+import org.hibernate.internal.util.compare.CalendarComparator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,6 +32,12 @@ public class OrderDAO extends BaseHibernateDAO {
 	public static final String ORDERDATE = "orderdate";
 	public static final String ORDERSTARTBLOCK = "orderstartblock";
 	public static final String ORDERTREATMENTID = "ordertreatmentid";
+	
+	private SqlDateConverter converter = new SqlDateConverter();
+	
+	public OrderDAO() {
+		converter.setPattern("YYYY-MM-DD");
+	}
 
 	public void save(Order transientInstance) {
 		log.debug("saving Order instance");
@@ -100,14 +109,18 @@ public class OrderDAO extends BaseHibernateDAO {
 	 * @param endTime
 	 * @return
 	 */
-	public List findByMonthView(String startTime, String endTime) {
+	public List findByMonthView(String startTime, String endTime, Integer docId,
+			Integer treatId) {
 		log.debug("finding all the orders between " + startTime + ", " + endTime);
 		try {
-			String queryString = "from Order as model where model."
-					+ "between ? and ?";
-			Query queryObject = getSession().createQuery(queryString);
-			queryObject.setParameter(0, startTime);
-			queryObject.setParameter(1, endTime);
+			String queryString = "from Order as model where "
+					+ "model.orderdate > :startTime and model.orderdate < :endTime "
+					+ "and model.ordertreatmentid = :treatId and model.orderdocid = :docId";
+			Query queryObject = getSession().createQuery(queryString)
+					.setString("startTime", startTime)
+					.setString("endTime", endTime)
+					.setInteger("treatId", treatId)
+					.setInteger("docId", docId);
 			return queryObject.list();
 		} catch (RuntimeException re) {
 			log.error("find orders by time period failed", re);

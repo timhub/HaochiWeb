@@ -37,6 +37,19 @@ public class DateUtility implements Serializable{
 		return instance;
 	}
 	
+	public static boolean isSameDate(Date date1, Date date2) {
+		boolean result = false;
+		SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd");
+		String datestr1 = sdf.format(date1);
+		String datestr2 = sdf.format(date2);
+		
+		if(datestr1.equals(datestr2)) {
+			result = true;
+		}
+		
+		return result;
+	}
+	
 	/**
 	 * Get the first day of current month.
 	 * @return

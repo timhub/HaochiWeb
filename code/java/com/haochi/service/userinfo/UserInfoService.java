@@ -1,5 +1,7 @@
 package com.haochi.service.userinfo;
 
+import java.util.List;
+
 import com.haochi.platform.persistence.dao.userinfo.Userinfo;
 import com.haochi.platform.persistence.dao.userinfo.UserinfoDAO;
 
@@ -60,7 +62,10 @@ public class UserInfoService {
 	 */
 	public Userinfo findUserByName(String userName) {
 		Userinfo userInfo = null;
-		userInfo = (Userinfo) userInfoDao.findByUsername(userName);
+		List resultList =  userInfoDao.findByUsername(userName); 
+		if(resultList.size() > 0) {
+			userInfo = (Userinfo) resultList.get(0);
+		}
 		
 		return userInfo;
 	}

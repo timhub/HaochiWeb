@@ -2,6 +2,9 @@ package com.haochi.facade.backingbean.userinfo;
 
 import java.io.Serializable;
 
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
+
 import com.haochi.facade.backingbean.BaseBackingBean;
 import com.haochi.platform.persistence.dao.userinfo.Userinfo;
 import com.haochi.service.userinfo.UserInfoService;
@@ -34,6 +37,10 @@ public class UserInfoBackingBean extends BaseBackingBean implements Serializable
 				isLoggedOn = false;
 			} else {
 				isLoggedOn = true;
+				HttpSession session = (HttpSession)FacesContext.getCurrentInstance()
+						.getExternalContext().getSession(true);
+				session.setAttribute("username", user.getUsername());
+				session.setAttribute("userid", user.getUserid());
 			}
 		} else {
 			isLoggedOn = false;

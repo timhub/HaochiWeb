@@ -21,6 +21,9 @@ table td{padding-top: 10px;}
 .hight1{min-height: 550px;}
 .not_resize{resize: none;}
 
+/* borders */
+.border_top{border-top:1px; border-color: gray;}
+
 /* position */
 .float_left{float: left;}
 .float_right{float: right;}
