@@ -24,6 +24,7 @@ public class DateUtility implements Serializable{
 		
 		//Get current date time.
 		calendar = Calendar.getInstance();
+		currentMonth = calendar.get(Calendar.MONTH);
 	}
 	
 	/**

@@ -9,12 +9,31 @@
 	
 	<ice:form id="book_table">
 		<ice:panelGroup styleClass="container margin_top50">
-			<table style="border-top:none;border-bottom: none;border-left: none;border-right: none;">
+			<ice:panelGroup id="month_offset">
+				<ice:panelGroup id="offset_last">
+					<ice:commandButton id="toLastMonth" 
+									   rendered="#{backingBean.lastMonthTrigger}"
+									   action="#{backingBean.switchViewToLastMonth}"
+									   value="#{msgs.book_month_to_last_month_txt}"/>
+				</ice:panelGroup>
+				<ice:panelGroup>
+					<h2>#{backingBean.currentMonth}#{msgs.book_month_text}</h2>
+				</ice:panelGroup>
+				<ice:panelGroup id="offset_next">
+					<ice:commandButton id="toNextMonth" 
+									   rendered="#{backingBean.nextMonthTrigger}"
+									   action="#{backingBean.switchViewToNextMonth}"
+									   value="#{msgs.book_month_to_next_month_txt}"/>
+				</ice:panelGroup>
+			</ice:panelGroup>
+			
+			<table class="table table-bordered  table-hover">
 				<ui:repeat varStatus="status" var="weekItem" value="#{backingBean.weekViewList}">
 					<tr>
 						<ui:repeat varStatus="innerstatus" var="dayItem" value="#{weekItem.dayOrderList}">
-							<td class="#{(status.index == 0)?'':'border_top'}">
-								<ice:outputText value="#{dayItem.dateText}"/>
+							<td class="#{(status.index == 0)?'':'border_top border_left'} 
+							#{dayItem.loaded?'highlight_bgcolor white_text':''}">
+								<ice:outputText value="#{dayItem.dateText}" />
 							</td>
 						</ui:repeat>
 					</tr>

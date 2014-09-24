@@ -10,9 +10,10 @@ public class OrderDayView implements Serializable{
 	
 	private Order[] dayOrderList = new Order[4];
 	private String dateText;
+	private boolean loaded;
 	
 	public OrderDayView() {
-		
+		loaded = false;
 	}
 	
 	public OrderDayView(Order[] orderList) {
@@ -34,6 +35,14 @@ public class OrderDayView implements Serializable{
 
 	public void setDateText(String dateText) {
 		this.dateText = dateText;
+	}
+
+	public boolean getLoaded() {
+		return loaded;
+	}
+
+	public void setLoaded(boolean loaded) {
+		this.loaded = loaded;
 	}
 
 }

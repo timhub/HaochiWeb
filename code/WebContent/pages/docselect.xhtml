@@ -10,15 +10,19 @@
 	<ice:form id="doc_selection">
 		<ice:panelGroup styleClass="container margin_top160">
 			<ui:repeat var="doc" value="#{backingBean.docList}" varStatus="status">
-				<ice:commandLink action="#{backingBean.updateDocSelection(status.index)}" value="#{doc.docname}">
-				</ice:commandLink>
+				<ice:commandLink action="#{backingBean.updateDocSelection(status.index)}"
+								 value="#{doc.docname}"
+								 styleClass="#{(status.index == 0)?'':'margin_left25'}
+								 			#{(backingBean.selectedDocId == doc.docid)?'highlight_bgcolor white_text':''}"/>
 			</ui:repeat>
 		</ice:panelGroup>
 		
 		<ice:panelGroup styleClass="container margin_top25">
 			<ui:repeat var="treat" value="#{backingBean.treatList}" varStatus="status">
-				<ice:commandLink action="#{backingBean.updateTreatSelection(status.index)}" styleClass="#{(status.index == 0)?'':'margin_left25'}" 
-				value="#{treat.treatName}"/>
+				<ice:commandLink action="#{backingBean.updateTreatSelection(status.index)}" 
+								 styleClass="#{(status.index == 0)?'':'margin_left25'}
+								 			#{(backingBean.selectedTreatId == status.index)?'highlight_bgcolor white_text':''}" 
+								 value="#{treat.treatName}"/>
 			</ui:repeat>
 		</ice:panelGroup>
 	</ice:form>

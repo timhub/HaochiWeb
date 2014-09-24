@@ -23,6 +23,7 @@ table td{padding-top: 10px;}
 
 /* borders */
 .border_top{border-top:1px; border-color: gray;}
+.border_left{border-left:1px; border-color: gray;}
 
 /* position */
 .float_left{float: left;}
@@ -45,10 +46,13 @@ table td{padding-top: 10px;}
 
 /* font & color*/
 .main_color{color: #48C9B0;}
+.white_text{color:#FFFFFF}
 .white_bg{background-color: #FFFFFF;}
 .light_greenbg{background-color: #effaf8;}
 .title_text{font-size: 35px;}
 .subtitle_size{font-size: 25px;}
+.highlight_bgcolor{background-color: #48C9B0 !important;}
+
 
 /* overlay */
 .overlay{

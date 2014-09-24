@@ -26,24 +26,33 @@ import com.haochi.service.utility.DateUtility;
 public class BookServiceBackingBean extends BaseBackingBean implements Serializable {
 
 	private static final long serialVersionUID = -1892860394801931271L;
-	
-	public OrderWeekView[] weekViewList = new OrderWeekView[5];
-	private String selectedDate;
-	private DateUtility dateUtil;
-	
-	private Integer selectMonth;
-	private Integer monthOffset;
-	
-	SelectFunctionBackingBean selectBacBean;
-	
-	private Userinfo currentUser;
+
+	public  OrderWeekView[]   			weekViewList = new OrderWeekView[5];
+	private String 						selectedDate;
+	private DateUtility 				dateUtil;
+
+	private Integer 					selectMonth;
+	private Integer 					monthOffset;
+	private boolean 					lastMonthTrigger;
+	private boolean 					nextMonthTrigger;
+
+	static  SelectFunctionBackingBean 	selectBacBean;
+
+	private Userinfo 					currentUser;
+	private int 						currentMonth;
 	
 	public BookServiceBackingBean() {
 		UserInfoService service = new UserInfoService();
 		dateUtil = DateUtility.getInstance();
-		selectBacBean = (SelectFunctionBackingBean) FacesContext.getCurrentInstance().getApplication()
-				.getELResolver().getValue(FacesContext.getCurrentInstance().getELContext(), 
-						null, "selectionServiceBackingBean");
+		setCurrentMonth(dateUtil.getCalendar().get(Calendar.MONTH));
+		lastMonthTrigger = false;
+		nextMonthTrigger = true;
+		getCurrentSelectBean();
+			
+		if(selectBacBean!= null) {
+			selectBacBean.setSelectedDocId(-1);
+			selectBacBean.setSelectedTreatId(-1);
+		}
 		//Get current login user.
 		HttpSession session  = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
 		if(session != null) {
@@ -130,6 +139,7 @@ public class BookServiceBackingBean extends BaseBackingBean implements Serializa
 	 */
 	public void loadOrdersFromDB() {
 		BookService service = new BookService();
+		getCurrentSelectBean();
 		if(selectBacBean.isSelectionAllSet()) {
 			List<Order> orderList = service.getOrderInCurrentMonth(selectBacBean.getSelectedDocId(), 
 					selectBacBean.getSelectedTreatId());
@@ -144,12 +154,45 @@ public class BookServiceBackingBean extends BaseBackingBean implements Serializa
 								targetOrder.setOrderdocid(order.getOrderdocid());
 								targetOrder.setOrdertreatmentid(order.getOrdertreatmentid());
 								targetOrder.setOrderuserid(order.getOrderuserid());
+								weekViewList[i].getDayOrderList()[j].setLoaded(true);
 							}
 						}
 					}
 				}
 			}
 		}
+	}
+	
+	public void switchViewToLastMonth() {
+		monthOffset--;
+		initialDateGrid();
+		setCurrentMonth(dateUtil.getCalendar().get(Calendar.MONTH));
+		if(monthOffset > 0 && monthOffset < 12){
+			lastMonthTrigger = true;
+		} else {
+			lastMonthTrigger = false;
+		}
+	}
+	
+	public void switchViewToNextMonth() {
+		monthOffset++;
+		initialDateGrid();
+		setCurrentMonth(dateUtil.getCalendar().get(Calendar.MONTH));
+		if(monthOffset > 0 && monthOffset < 12){
+			lastMonthTrigger = true;
+		} else {
+			lastMonthTrigger = false;
+		}
+	}
+	
+	public void refreshOrders() {
+		initialDateGrid();
+	}
+	
+	private void getCurrentSelectBean() {
+		selectBacBean = (SelectFunctionBackingBean) FacesContext.getCurrentInstance().getApplication()
+				.getELResolver().getValue(FacesContext.getCurrentInstance().getELContext(), 
+						null, "selectionServiceBackingBean");
 	}
 	
 	/**
@@ -189,6 +232,30 @@ public class BookServiceBackingBean extends BaseBackingBean implements Serializa
 
 	public void setMonthOffset(Integer monthOffset) {
 		this.monthOffset = monthOffset;
+	}
+
+	public boolean getLastMonthTrigger() {
+		return lastMonthTrigger;
+	}
+
+	public void setLastMonthTrigger(boolean lastMonthTrigger) {
+		this.lastMonthTrigger = lastMonthTrigger;
+	}
+
+	public boolean getNextMonthTrigger() {
+		return nextMonthTrigger;
+	}
+
+	public void setNextMonthTrigger(boolean nextMonthTrigger) {
+		this.nextMonthTrigger = nextMonthTrigger;
+	}
+
+	public int getCurrentMonth() {
+		return currentMonth;
+	}
+
+	public void setCurrentMonth(int currentMonth) {
+		this.currentMonth = currentMonth;
 	}
 
 }

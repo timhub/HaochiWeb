@@ -114,7 +114,7 @@ public class OrderDAO extends BaseHibernateDAO {
 		log.debug("finding all the orders between " + startTime + ", " + endTime);
 		try {
 			String queryString = "from Order as model where "
-					+ "model.orderdate > :startTime and model.orderdate < :endTime "
+					+ "model.orderdate >= :startTime and model.orderdate <= :endTime "
 					+ "and model.ordertreatmentid = :treatId and model.orderdocid = :docId";
 			Query queryObject = getSession().createQuery(queryString)
 					.setString("startTime", startTime)
