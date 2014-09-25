@@ -16,6 +16,7 @@ import com.haochi.service.order.BookService;
 import com.haochi.service.userinfo.UserInfoService;
 import com.haochi.service.utility.CommonConstants;
 import com.haochi.service.utility.DateUtility;
+import com.haochi.service.utility.PropertyUtils;
 
 /**
  * This class controls the logic for booking services. It loaded all the date cells and display the
@@ -27,27 +28,28 @@ public class BookServiceBackingBean extends BaseBackingBean implements Serializa
 
 	private static final long serialVersionUID = -1892860394801931271L;
 
-	public  OrderWeekView[]   			weekViewList = new OrderWeekView[5];
+	public  OrderWeekView[]   			weekViewList;
 	private String 						selectedDate;
 	private DateUtility 				dateUtil;
 
 	private Integer 					selectMonth;
 	private Integer 					monthOffset;
-	private boolean 					lastMonthTrigger;
-	private boolean 					nextMonthTrigger;
 
 	static  SelectFunctionBackingBean 	selectBacBean;
 
 	private Userinfo 					currentUser;
 	private int 						currentMonth;
 	
+	private String[] 					headerText;
+	
+	private static final String			HEADER_STRING_KEY = "book_table_header_list";									
+	
 	public BookServiceBackingBean() {
 		UserInfoService service = new UserInfoService();
 		dateUtil = DateUtility.getInstance();
-		setCurrentMonth(dateUtil.getCalendar().get(Calendar.MONTH));
-		lastMonthTrigger = false;
-		nextMonthTrigger = true;
 		getCurrentSelectBean();
+		headerText = PropertyUtils.getInstance().getProperty(HEADER_STRING_KEY)
+				.split(CommonConstants.STRING_SPLIT_SYMBOL);
 			
 		if(selectBacBean!= null) {
 			selectBacBean.setSelectedDocId(-1);
@@ -76,14 +78,16 @@ public class BookServiceBackingBean extends BaseBackingBean implements Serializa
 		calendar.setTime(dateUtil.getCurrentDate());
 		//Get selected month by offset.
 		calendar.add(Calendar.MONTH, monthOffset);
+		setCurrentMonth(dateUtil.getCalendar().get(Calendar.MONTH) + 1);
 		calendar.set(Calendar.DATE, 1);
 		maxWeekCount = calendar.getActualMaximum(Calendar.WEEK_OF_MONTH);
+		weekViewList = new OrderWeekView[maxWeekCount];
 		
 		while(loadedWeek < maxWeekCount) {
 			OrderWeekView week;
 			if(loadedWeek == 0) {
 				week = new OrderWeekView();
-				int daysInFirstWeek = dateUtil.getDaysInFirstWeek();
+				int daysInFirstWeek = dateUtil.getDaysInFirstWeek(calendar);
 				int startDay = CommonConstants.MAX_DAYS_IN_WEEK - daysInFirstWeek;
 				OrderDayView[] dayViewList = new OrderDayView[7];
 				for(int emtDay = 0; emtDay < startDay; emtDay ++) {
@@ -166,23 +170,11 @@ public class BookServiceBackingBean extends BaseBackingBean implements Serializa
 	public void switchViewToLastMonth() {
 		monthOffset--;
 		initialDateGrid();
-		setCurrentMonth(dateUtil.getCalendar().get(Calendar.MONTH));
-		if(monthOffset > 0 && monthOffset < 12){
-			lastMonthTrigger = true;
-		} else {
-			lastMonthTrigger = false;
-		}
 	}
 	
 	public void switchViewToNextMonth() {
 		monthOffset++;
 		initialDateGrid();
-		setCurrentMonth(dateUtil.getCalendar().get(Calendar.MONTH));
-		if(monthOffset > 0 && monthOffset < 12){
-			lastMonthTrigger = true;
-		} else {
-			lastMonthTrigger = false;
-		}
 	}
 	
 	public void refreshOrders() {
@@ -234,28 +226,20 @@ public class BookServiceBackingBean extends BaseBackingBean implements Serializa
 		this.monthOffset = monthOffset;
 	}
 
-	public boolean getLastMonthTrigger() {
-		return lastMonthTrigger;
-	}
-
-	public void setLastMonthTrigger(boolean lastMonthTrigger) {
-		this.lastMonthTrigger = lastMonthTrigger;
-	}
-
-	public boolean getNextMonthTrigger() {
-		return nextMonthTrigger;
-	}
-
-	public void setNextMonthTrigger(boolean nextMonthTrigger) {
-		this.nextMonthTrigger = nextMonthTrigger;
-	}
-
 	public int getCurrentMonth() {
 		return currentMonth;
 	}
 
 	public void setCurrentMonth(int currentMonth) {
 		this.currentMonth = currentMonth;
+	}
+
+	public String[] getHeaderText() {
+		return headerText;
+	}
+
+	public void setHeaderText(String[] headerText) {
+		this.headerText = headerText;
 	}
 
 }

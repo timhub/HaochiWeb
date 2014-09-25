@@ -6,4 +6,5 @@ public class CommonConstants {
 	public static final Integer MAX_DAYS_IN_WEEK = 7;
 	public static final Integer MAX_TREAT_COUNT = 6;
 	public static final String PROPERTY_CN_NAME = "/messages_zh_CN.properties";
+	public static final String STRING_SPLIT_SYMBOL = ",";
 }

@@ -12,6 +12,8 @@ import java.util.Date;
  */
 public class DateUtility implements Serializable{
 	
+	private static final long serialVersionUID = 6315634455208343229L;
+
 	static DateUtility instance = null;
 	
 	private Calendar calendar;
@@ -55,8 +57,7 @@ public class DateUtility implements Serializable{
 	 * Get the first day of current month.
 	 * @return
 	 */
-	public Calendar getFirstDayOfMonth(){     
-       Calendar calendar = Calendar.getInstance();   
+	public Calendar getFirstDayOfMonth(Calendar calendar){     
        calendar.set(Calendar.DATE,1);
        return calendar;     
     }  
@@ -65,9 +66,8 @@ public class DateUtility implements Serializable{
 	 * Get the amount of days within the first week of the month.
 	 * @return
 	 */
-	public int getDaysInFirstWeek() {
+	public int getDaysInFirstWeek(Calendar calendar) {
 		int result = 0;
-		Calendar calendar = getFirstDayOfMonth();
 		result = 7 - calendar.get(Calendar.DAY_OF_WEEK) + 1;
 		
 		return result;
