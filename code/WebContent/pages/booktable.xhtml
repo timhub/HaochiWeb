@@ -9,17 +9,18 @@
 	
 	<ice:form id="book_table">
 		<ice:panelGroup styleClass="container margin_top50">
-			<ice:panelGroup id="month_offset" styleClass="float_left">
-				<ice:panelGroup id="offset_last">
-					<ice:commandLink id="toLastMonth" 
+			<ice:panelGroup id="month_offset" styleClass="grid5 margin_auto">
+				<ice:panelGroup id="offset_last" styleClass="grid1 float_left margin_top25">
+					<ice:commandLink id="toLastMonth"
 									 disabled="#{backingBean.monthOffset == 0? true:false}"
 									 action="#{backingBean.switchViewToLastMonth}"
 									 value="#{msgs.book_month_to_prev_month_txt}"/>
 				</ice:panelGroup>
-				<ice:panelGroup>
-					<h2>#{backingBean.currentMonth}#{msgs.book_month_text}</h2>
+				<ice:panelGroup styleClass="grid1 text_center float_left">
+					<span class="head_text">#{backingBean.currentMonth}</span>
+					<span class="subtitle_size">#{msgs.book_month_text}</span>
 				</ice:panelGroup>
-				<ice:panelGroup id="offset_next">
+				<ice:panelGroup id="offset_next" styleClass="grid1 float_left text_right margin_top25">
 					<ice:commandLink id="toNextMonth" 
 									 disabled="#{backingBean.monthOffset == 12? true:false}"
 									 action="#{backingBean.switchViewToNextMonth}"
@@ -30,7 +31,7 @@
 			<table class="table table-bordered  table-hover">
 				<tr>
 					<ui:repeat var="htxt" value="#{backingBean.headerText}">
-						<td class="light_greenbg2">
+						<td class="light_greenbg2_force">
 							<ice:outputText value="#{htxt}"/>
 						</td>
 					</ui:repeat>
@@ -39,8 +40,13 @@
 					<tr>
 						<ui:repeat varStatus="innerstatus" var="dayItem" value="#{weekItem.dayOrderList}">
 							<td class="#{(status.index == 0)?'':'border_top border_left'} 
-							#{dayItem.loaded?'highlight_bgcolor white_text':''}">
-								<ice:outputText value="#{dayItem.dateText}" />
+							#{dayItem.loaded?(dayItem.fullLoaded?'light_greenbg white_text':
+								'highlight_bgcolor white_text'):''}">
+								<ice:commandLink>
+									<ice:panelGroup>
+										<ice:outputText escape="false" value="#{dayItem.displayText}"/>
+									</ice:panelGroup>
+								</ice:commandLink>
 							</td>
 						</ui:repeat>
 					</tr>

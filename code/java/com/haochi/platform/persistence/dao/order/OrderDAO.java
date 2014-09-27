@@ -109,17 +109,15 @@ public class OrderDAO extends BaseHibernateDAO {
 	 * @param endTime
 	 * @return
 	 */
-	public List findByMonthView(String startTime, String endTime, Integer docId,
-			Integer treatId) {
+	public List findByMonthView(String startTime, String endTime, Integer docId) {
 		log.debug("finding all the orders between " + startTime + ", " + endTime);
 		try {
 			String queryString = "from Order as model where "
 					+ "model.orderdate >= :startTime and model.orderdate <= :endTime "
-					+ "and model.ordertreatmentid = :treatId and model.orderdocid = :docId";
+					+ "and  model.orderdocid = :docId";
 			Query queryObject = getSession().createQuery(queryString)
 					.setString("startTime", startTime)
 					.setString("endTime", endTime)
-					.setInteger("treatId", treatId)
 					.setInteger("docId", docId);
 			return queryObject.list();
 		} catch (RuntimeException re) {

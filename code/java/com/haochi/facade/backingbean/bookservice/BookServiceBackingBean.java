@@ -159,6 +159,7 @@ public class BookServiceBackingBean extends BaseBackingBean implements Serializa
 								targetOrder.setOrdertreatmentid(order.getOrdertreatmentid());
 								targetOrder.setOrderuserid(order.getOrderuserid());
 								weekViewList[i].getDayOrderList()[j].setLoaded(true);
+								weekViewList[i].getDayOrderList()[j].processDisplayText();
 							}
 						}
 					}

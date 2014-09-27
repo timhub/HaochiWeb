@@ -24,7 +24,7 @@ public class BookService {
 				+ "-" + (month > 9 ? month : "0" + month);
 		String startDate = baseDate + "-01";
 		String endDate = baseDate + "-" + (maxDay - 1);
-		resultList = orderDao.findByMonthView(startDate, endDate, docId, treatId);
+		resultList = orderDao.findByMonthView(startDate, endDate, docId);
 		
 		return resultList;
 	}

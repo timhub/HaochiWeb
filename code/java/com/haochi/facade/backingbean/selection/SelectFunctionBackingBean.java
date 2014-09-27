@@ -58,7 +58,7 @@ public class SelectFunctionBackingBean implements Serializable {
 	 */
 	public void updateDocSelection(int index) {
 		boolean reloadFlag = false;
-		if(index == selectedTreatId){
+		if(index == selectedDocId){
 			reloadFlag = false;
 		} else {
 			reloadFlag = true;
