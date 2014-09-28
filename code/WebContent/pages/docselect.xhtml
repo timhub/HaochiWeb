@@ -12,16 +12,18 @@
 			<ui:repeat var="doc" value="#{backingBean.docList}" varStatus="status">
 				<ice:commandLink action="#{backingBean.updateDocSelection(status.index)}"
 								 value="#{doc.docname}"
-								 styleClass="#{(status.index == 0)?'':'margin_left25'}
-								 			#{(backingBean.selectedDocId == doc.docid)?'highlight_bgcolor white_text':''}"/>
+								 styleClass="#{(status.index == 0)?'':'margin_left25'} btn
+								 			#{(backingBean.selectedDocId == doc.docid)?
+								 				'btn-embossed btn-primary':'btn-default'}"/>
 			</ui:repeat>
 		</ice:panelGroup>
 		
 		<ice:panelGroup styleClass="container margin_top25">
 			<ui:repeat var="treat" value="#{backingBean.treatList}" varStatus="status">
 				<ice:commandLink action="#{backingBean.updateTreatSelection(status.index)}" 
-								 styleClass="#{(status.index == 0)?'':'margin_left25'}
-								 			#{(backingBean.selectedTreatId == status.index)?'highlight_bgcolor white_text':''}" 
+								 styleClass="#{(status.index == 0)?'':'margin_left25'} btn
+								 			#{(backingBean.selectedTreatId == status.index)?
+								 				'btn-embossed btn-primary':'btn-default'}" 
 								 value="#{treat.treatName}"/>
 			</ui:repeat>
 		</ice:panelGroup>

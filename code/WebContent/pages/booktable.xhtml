@@ -8,7 +8,7 @@
 	<ui:param name="backingBean" value="#{bookServiceBackingBean}"/>
 	
 	<ice:form id="book_table">
-		<ice:panelGroup styleClass="container margin_top50">
+		<ice:panelGroup styleClass="container margin_top50" rendered="#{backingBean.orderViewSwitch == 0}">
 			<ice:panelGroup id="month_offset" styleClass="grid5 margin_auto">
 				<ice:panelGroup id="offset_last" styleClass="grid1 float_left margin_top25">
 					<ice:commandLink id="toLastMonth"
@@ -36,13 +36,13 @@
 						</td>
 					</ui:repeat>
 				</tr>
-				<ui:repeat varStatus="status" var="weekItem" value="#{backingBean.weekViewList}">
+				<ui:repeat varStatus="weekStatus" var="weekItem" value="#{backingBean.weekViewList}">
 					<tr>
-						<ui:repeat varStatus="innerstatus" var="dayItem" value="#{weekItem.dayOrderList}">
+						<ui:repeat varStatus="dayStatus" var="dayItem" value="#{weekItem.dayOrderList}">
 							<td class="#{(status.index == 0)?'':'border_top border_left'} 
 							#{dayItem.loaded?(dayItem.fullLoaded?'light_greenbg white_text':
 								'highlight_bgcolor white_text'):''}">
-								<ice:commandLink>
+								<ice:commandLink action="#{backingBean.toWeekView(weekStatus.index)}">
 									<ice:panelGroup>
 										<ice:outputText escape="false" value="#{dayItem.displayText}"/>
 									</ice:panelGroup>
@@ -52,6 +52,50 @@
 					</tr>
 				</ui:repeat>
 			</table>
+		</ice:panelGroup>
+		
+<!-- 		The week view that showed after user selected the date -->
+		<ice:panelGroup styleClass="container margin_top50" rendered="#{backingBean.orderViewSwitch == 1}">
+			<ice:commandButton value="#{msgs.book_table_week_back_to_month_text}"
+							 action="#{backingBean.backToMonthView}"
+							 styleClass="btn btn-embossed btn-primary margin_bottom50"/>
+		    
+		    <table class="table table-bordered table-hover">
+		    	<tr>
+		    		<td>
+		    		</td>
+					<ui:repeat var="orderDay" varStatus="orderStatus" 
+							   value="#{backingBean.weekViewList[backingBean.selectedWeekIndex].dayOrderList}">
+						<td class="light_greenbg2_force">
+							<ice:outputText value="#{orderDay.weekViewDisplayText}"/>
+							<br />
+							<ice:outputText value="#{backingBean.headerText[orderStatus.index]}"
+											rendered="#{!empty orderDay}"/>
+						</td>
+					</ui:repeat>
+				</tr>
+	   			<ui:repeat var="text" varStatus="dayOrderStatus"
+	   					   value="#{backingBean.weekViewList[backingBean.selectedWeekIndex]
+	   									.dayOrderList[6].dayOrderList}">
+					<tr>
+						<td>
+							<ice:outputText value="#{backingBean.orderBlockStartTime[dayOrderStatus.index]}:00 ~ "/>
+				   			<br/>
+				   			<ice:outputText value="#{backingBean.orderBlockStartTime[dayOrderStatus.index] + 2}:00"/>
+						</td>
+						<ui:repeat var="order" 
+								   value="#{backingBean.weekViewList[backingBean.selectedWeekIndex]
+	   									.dayOrderList}">
+							<td>
+								<ice:commandLink value="#{msgs.book_table_no_order_text}" 
+												rendered="#{!order.dayOrderList[dayOrderStatus.index].loaded}"/>
+								<ice:outputText value="#{order.dayOrderList[dayOrderStatus.index].tableDisplayText}"
+												 rendered="#{order.dayOrderList[dayOrderStatus.index].loaded}"/>
+							</td>
+						</ui:repeat>
+					</tr>
+	   			</ui:repeat>
+		    </table>
 		</ice:panelGroup>
 	</ice:form>
 </ui:composition>

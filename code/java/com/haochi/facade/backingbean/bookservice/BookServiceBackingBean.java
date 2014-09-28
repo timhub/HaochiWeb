@@ -37,12 +37,22 @@ public class BookServiceBackingBean extends BaseBackingBean implements Serializa
 
 	static  SelectFunctionBackingBean 	selectBacBean;
 
+	//Check if the user is logged in, control the output of the book overlay content.
 	private Userinfo 					currentUser;
 	private int 						currentMonth;
 	
 	private String[] 					headerText;
 	
-	private static final String			HEADER_STRING_KEY = "book_table_header_list";									
+	//The switch for toggling the view for month view to week view. Set default as 0 for 
+	//month view, 1 for week view.
+	private int 						orderViewSwitch = 0;
+	//Store the index that the user chosen.
+	private int							selectedWeekIndex;
+	
+	private String[] 					orderBlockStartTime;
+	
+	private static final String			HEADER_STRING_KEY = "book_table_header_list";
+	private static final String 		ORDER_BLOCK_START_TIME = "book_table_order_block_start_time";
 	
 	public BookServiceBackingBean() {
 		UserInfoService service = new UserInfoService();
@@ -58,8 +68,10 @@ public class BookServiceBackingBean extends BaseBackingBean implements Serializa
 		//Get current login user.
 		HttpSession session  = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
 		if(session != null) {
-			currentUser = service.findUserByName((String)session.getAttribute("username"));
+			setCurrentUser(service.findUserByName((String)session.getAttribute("username")));
 		}
+		orderBlockStartTime = PropertyUtils.getInstance().getProperty(ORDER_BLOCK_START_TIME)
+				.split(CommonConstants.STRING_SPLIT_SYMBOL);
 		
 		setMonthOffset(0);
 		initialDateGrid();
@@ -158,6 +170,7 @@ public class BookServiceBackingBean extends BaseBackingBean implements Serializa
 								targetOrder.setOrderdocid(order.getOrderdocid());
 								targetOrder.setOrdertreatmentid(order.getOrdertreatmentid());
 								targetOrder.setOrderuserid(order.getOrderuserid());
+								targetOrder.statusUpdateWhenLoadingFromDB();
 								weekViewList[i].getDayOrderList()[j].setLoaded(true);
 								weekViewList[i].getDayOrderList()[j].processDisplayText();
 							}
@@ -188,11 +201,13 @@ public class BookServiceBackingBean extends BaseBackingBean implements Serializa
 						null, "selectionServiceBackingBean");
 	}
 	
-	/**
-	 * User operation to change the view of the grid to see the next month's book.
-	 */
-	public void checkNextMonth() {
-		
+	public void toWeekView(int selectedWeekIndex) {
+		setOrderViewSwitch(1);
+		setSelectedWeekIndex(selectedWeekIndex);
+	}
+	
+	public void backToMonthView() {
+		setOrderViewSwitch(0);
 	}
 	
 	public Integer getSelectMonth() {
@@ -241,6 +256,38 @@ public class BookServiceBackingBean extends BaseBackingBean implements Serializa
 
 	public void setHeaderText(String[] headerText) {
 		this.headerText = headerText;
+	}
+
+	public Userinfo getCurrentUser() {
+		return currentUser;
+	}
+
+	public void setCurrentUser(Userinfo currentUser) {
+		this.currentUser = currentUser;
+	}
+
+	public int getOrderViewSwitch() {
+		return orderViewSwitch;
+	}
+
+	public void setOrderViewSwitch(int orderViewSwitch) {
+		this.orderViewSwitch = orderViewSwitch;
+	}
+
+	public int getSelectedWeekIndex() {
+		return selectedWeekIndex;
+	}
+
+	public void setSelectedWeekIndex(int selectedWeekIndex) {
+		this.selectedWeekIndex = selectedWeekIndex;
+	}
+
+	public String[] getOrderBlockStartTime() {
+		return orderBlockStartTime;
+	}
+
+	public void setOrderBlockStartTime(String[] orderBlockStartTime) {
+		this.orderBlockStartTime = orderBlockStartTime;
 	}
 
 }

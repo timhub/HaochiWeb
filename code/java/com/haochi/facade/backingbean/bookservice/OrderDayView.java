@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.text.MessageFormat;
 
 import com.haochi.platform.persistence.dao.order.Order;
-import com.haochi.service.utility.CommonConstants;
 import com.haochi.service.utility.PropertyUtils;
 
 public class OrderDayView implements Serializable{
@@ -13,15 +12,18 @@ public class OrderDayView implements Serializable{
 	
 	private Order[] dayOrderList = new Order[4];
 	private String displayText;
+	private String weekViewDisplayText;
 	private boolean loaded;
 	private boolean fullLoaded = false;
 	
 	private static final String BASE_DISPLAY_TEXT = "book_month_view_text";
+	private static final String BASE_WEEK_VIEW_DISPLAY_TEXT = "book_table_month_date_text";
 	
 	/**
 	 * Generate the string that book table need to see.
 	 * @return
 	 */
+	@SuppressWarnings("deprecation")
 	public void processDisplayText() {
 		String baseString = PropertyUtils.getInstance().getProperty(
 				BASE_DISPLAY_TEXT);
@@ -34,9 +36,19 @@ public class OrderDayView implements Serializable{
 		if (blockNumber == 0) {
 			setFullLoaded(true);
 		}
-		String[] fillString = { dayOrderList[0].getOrderdate().getDate() + "", blockNumber + "" };
+		Object[] fillString = { dayOrderList[0].getOrderdate().getDate() + "", blockNumber + "" };
 
 		setDisplayText(MessageFormat.format(baseString, fillString)); 
+	}
+	
+	@SuppressWarnings("deprecation")
+	private void processWeekDisplayText() {
+		String baseString = PropertyUtils.getInstance().getProperty(
+				BASE_WEEK_VIEW_DISPLAY_TEXT);
+		Object[] fillString = {dayOrderList[0].getOrderdate().getMonth() + 1 + "",
+				dayOrderList[0].getOrderdate().getDate() + ""};
+		
+		setWeekViewDisplayText(MessageFormat.format(baseString, fillString));
 	}
 	
 	public OrderDayView() {
@@ -54,6 +66,7 @@ public class OrderDayView implements Serializable{
 	public void setDayOrderList(Order[] dayOrderList) {
 		this.dayOrderList = dayOrderList;
 		processDisplayText();
+		processWeekDisplayText();
 	}
 
 	public String getDisplayText() {
@@ -78,6 +91,14 @@ public class OrderDayView implements Serializable{
 
 	public void setFullLoaded(boolean fullLoaded) {
 		this.fullLoaded = fullLoaded;
+	}
+
+	public String getWeekViewDisplayText() {
+		return weekViewDisplayText;
+	}
+
+	public void setWeekViewDisplayText(String weekViewDisplayText) {
+		this.weekViewDisplayText = weekViewDisplayText;
 	}
 
 }
