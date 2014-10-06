@@ -35,6 +35,12 @@
 		<managed-bean-name>selectionServiceBackingBean</managed-bean-name>
 		<managed-bean-class>com.haochi.facade.backingbean.selection.SelectFunctionBackingBean</managed-bean-class>
 		<managed-bean-scope>view</managed-bean-scope>
-	</managed-bean>	
+	</managed-bean>
+	
+	<managed-bean>
+		<managed-bean-name>orderBackingBean</managed-bean-name>
+		<managed-bean-class>com.haochi.facade.backingbean.bookservice.OrderBackingBean</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
 
 </faces-config>

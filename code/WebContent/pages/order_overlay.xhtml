@@ -1,0 +1,80 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+  				xmlns:ui="http://java.sun.com/jsf/facelets"
+			    xmlns:h="http://java.sun.com/jsf/html"
+			    xmlns:f="http://java.sun.com/jsf/core"
+			    xmlns:ice="http://www.icesoft.com/icefaces/component">
+
+	<ui:define name="order_overlay"/>
+	<ui:param name="backingBean" value="#{orderBackingBean}"/>
+	
+	<ice:panelGroup styleClass="overlay" rendered="#{backingBean.showOrderOverlay}">
+		<ice:panelGroup styleClass="hard_shaddow margin_auto grid4 hight1 white_bg margin_top160 padding25">
+			<ice:outputText value="#{msgs.order_input_title}" styleClass="title_text"/>
+			<ice:form id="order_form" partialSubmit="false">
+				<ice:panelGroup styleClass="float_left margin_top25 text_left">
+					<table>
+						<tr>
+							<td>
+								<ice:outputText value="#{msgs.order_input_user_name}"/>
+							</td>
+							<td>
+								<ice:inputText styleClass="form-control grid3 margin_auto input-sm" 
+											   value="#{backingBean.userName}" 
+											   rendered="#{empty backingBean.bookBackingBean.currentUser}"/>
+							   	<ice:outputText value="#{backingBean.bookBackingBean.currentUser.username}"/>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<ice:outputText value="#{msgs.regi_phone}"/>
+							</td>
+							<td>
+								<ice:inputText styleClass="form-control grid3 margin_auto input-sm" 
+									value="#{backingBean.userTelephone}"/>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<ice:outputText value="#{msgs.order_input_docname_text}"/>
+							</td>
+							<td>
+								<ice:outputText value="#{backingBean.docName}"/>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<ice:outputText value="#{msgs.order_input_treat_name_text}"/>
+							</td>
+							<td>
+								<ice:outputText value="#{backingBean.treatName}"/>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<ice:outputText value="#{msgs.order_input_order_time}"/>
+							</td>
+							<td>
+								<ice:outputText value="#{bookServiceBackingBean.orderBlockStartTime[backingBean.orderTimeBlock]}:00
+														 ~ #{bookServiceBackingBean.orderBlockStartTime[backingBean.orderTimeBlock] + 2}:00"/>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<ice:outputText value="#{msgs.regi_address}"/>
+							</td>
+							<td>
+								<ice:inputTextarea styleClass="not_resize form-control input-sm" value="#{backingBean.userAddress}"/>
+							</td>
+						</tr>
+					</table>
+				</ice:panelGroup>
+				<ice:panelGroup styleClass="margin_top25 float_right grid5">
+					<ice:commandButton value="#{msgs.confirm_text}" styleClass="btn btn-primary" 
+							action="#{backingBean.submitOrder}"/>
+					<ice:commandButton value="#{msgs.cancel_text}" styleClass="float_right btn btn-default margin_left60" 
+							action="#{backingBean.hideOverlay}"/>
+				</ice:panelGroup>
+			</ice:form>
+		</ice:panelGroup>
+	</ice:panelGroup>
+</ui:composition>

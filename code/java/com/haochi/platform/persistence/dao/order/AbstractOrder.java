@@ -19,6 +19,7 @@ public abstract class AbstractOrder implements java.io.Serializable {
 	private Date orderdate;
 	private Integer orderstartblock;
 	private String ordertreatmentid;
+	private String orderinfo;
 
 	// Constructors
 
@@ -29,13 +30,14 @@ public abstract class AbstractOrder implements java.io.Serializable {
 	/** full constructor */
 	public AbstractOrder(Integer orderid, Integer orderuserid,
 			Integer orderdocid, Date orderdate, Integer orderstartblock,
-			String ordertreatmentid) {
+			String ordertreatmentid, String orderinfo) {
 		this.orderid = orderid;
 		this.orderuserid = orderuserid;
 		this.orderdocid = orderdocid;
 		this.orderdate = orderdate;
 		this.orderstartblock = orderstartblock;
 		this.ordertreatmentid = ordertreatmentid;
+		this.orderinfo = orderinfo;
 	}
 
 	// Property accessors
@@ -86,6 +88,14 @@ public abstract class AbstractOrder implements java.io.Serializable {
 
 	public void setOrdertreatmentid(String ordertreatmentid) {
 		this.ordertreatmentid = ordertreatmentid;
+	}
+
+	public String getOrderinfo() {
+		return orderinfo;
+	}
+
+	public void setOrderinfo(String orderinfo) {
+		this.orderinfo = orderinfo;
 	}
 
 }

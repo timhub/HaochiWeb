@@ -13,7 +13,7 @@ import com.haochi.platform.persistence.dao.userinfo.UserinfoDAO;
  */
 public class UserInfoService {
 
-	UserinfoDAO userInfoDao;
+	private static UserinfoDAO userInfoDao;
 	
 	/**
 	 * Constructor
@@ -98,6 +98,15 @@ public class UserInfoService {
 		} else {
 			return true;
 		}
+	}
+	
+	/**
+	 * Get user name by its id.
+	 * @param id
+	 * @return user name from DB
+	 */
+	public static String getUserNameById(int id) {
+		return userInfoDao.findById(id).getUsername();
 	}
 
 }

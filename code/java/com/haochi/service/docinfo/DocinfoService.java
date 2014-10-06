@@ -7,7 +7,7 @@ import com.haochi.platform.persistence.dao.doctorinfo.DoctorinfoDAO;
 
 public class DocinfoService {
 	
-	private DoctorinfoDAO docDao;
+	private static DoctorinfoDAO docDao;
 	
 	public DocinfoService() {
 		docDao = new DoctorinfoDAO();
@@ -29,5 +29,16 @@ public class DocinfoService {
 			return null;
 		}
 
+	}
+	
+	/**
+	 * Find the doc information by doc id.
+	 * @return
+	 */
+	public static String getDocNameById(int docid) {
+		Doctorinfo result = null;
+		result = docDao.findById(docid);
+		
+		return result.getDocname();
 	}
 }

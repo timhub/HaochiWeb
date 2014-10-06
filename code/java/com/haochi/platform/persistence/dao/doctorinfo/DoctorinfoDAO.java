@@ -56,7 +56,7 @@ public class DoctorinfoDAO extends BaseHibernateDAO {
 		log.debug("getting Doctorinfo instance with id: " + id);
 		try {
 			Doctorinfo instance = (Doctorinfo) getSession().get(
-					"com.haochi.platform.persistence.dao.Doctorinfo", id);
+					"com.haochi.platform.persistence.dao.doctorinfo.Doctorinfo", id);
 			return instance;
 		} catch (RuntimeException re) {
 			log.error("get failed", re);
@@ -69,7 +69,7 @@ public class DoctorinfoDAO extends BaseHibernateDAO {
 		try {
 			List results = getSession()
 					.createCriteria(
-							"com.haochi.platform.persistence.dao.Doctorinfo")
+							"com.haochi.platform.persistence.dao.doctorinfo.Doctorinfo")
 					.add(Example.create(instance)).list();
 			log.debug("find by example successful, result size: "
 					+ results.size());

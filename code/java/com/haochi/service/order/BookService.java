@@ -1,6 +1,5 @@
 package com.haochi.service.order;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -9,12 +8,13 @@ import com.haochi.platform.persistence.dao.order.OrderDAO;
 import com.haochi.service.utility.DateUtility;
 
 public class BookService {
-	OrderDAO orderDao;
+	private static OrderDAO orderDao;
 	
 	public BookService() {
 		orderDao = new OrderDAO();
 	}
 	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public List<Order> getOrderInCurrentMonth(int docId, int treatId) {
 		List resultList = null;
 		
@@ -27,5 +27,9 @@ public class BookService {
 		resultList = orderDao.findByMonthView(startDate, endDate, docId);
 		
 		return resultList;
+	}
+	
+	public static void updateOrder(Order instance) {
+		orderDao.save(instance);
 	}
 }

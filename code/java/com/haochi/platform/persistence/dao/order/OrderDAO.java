@@ -6,6 +6,8 @@ import java.util.List;
 import org.apache.commons.beanutils.converters.SqlDateConverter;
 import org.hibernate.LockOptions;
 import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.criterion.Example;
 import org.hibernate.internal.util.compare.CalendarComparator;
 import org.slf4j.Logger;
@@ -42,7 +44,11 @@ public class OrderDAO extends BaseHibernateDAO {
 	public void save(Order transientInstance) {
 		log.debug("saving Order instance");
 		try {
-			getSession().save(transientInstance);
+			Transaction transaction;
+			Session session = getSession();
+			session.save(transientInstance);
+			transaction = session.beginTransaction();
+			transaction.commit();
 			log.debug("save successful");
 		} catch (RuntimeException re) {
 			log.error("save failed", re);

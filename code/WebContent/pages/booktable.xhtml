@@ -79,18 +79,25 @@
 	   									.dayOrderList[6].dayOrderList}">
 					<tr>
 						<td>
-							<ice:outputText value="#{backingBean.orderBlockStartTime[dayOrderStatus.index]}:00 ~ "/>
-				   			<br/>
-				   			<ice:outputText value="#{backingBean.orderBlockStartTime[dayOrderStatus.index] + 2}:00"/>
+							<ice:outputText value="#{backingBean.orderBlockStartTime[dayOrderStatus.index]}:00 ~ 
+													#{backingBean.orderBlockStartTime[dayOrderStatus.index] + 2}:00"/>
 						</td>
-						<ui:repeat var="order" 
+						<ui:repeat var="order" varStatus="orderStatus"
 								   value="#{backingBean.weekViewList[backingBean.selectedWeekIndex]
 	   									.dayOrderList}">
-							<td>
-								<ice:commandLink value="#{msgs.book_table_no_order_text}" 
-												rendered="#{!order.dayOrderList[dayOrderStatus.index].loaded}"/>
-								<ice:outputText value="#{order.dayOrderList[dayOrderStatus.index].tableDisplayText}"
-												 rendered="#{order.dayOrderList[dayOrderStatus.index].loaded}"/>
+							<td class="#{order.dayOrderList[dayOrderStatus.index].loaded?'highlight_bgcolor white_text':''}">
+								<ice:commandLink value="#{order.dayOrderList[dayOrderStatus.index].loaded?'order.dayOrderList[dayOrderStatus.index].tableDisplayText'
+															:msgs.book_table_no_order_text}" 
+												 rendered="#{(!order.dayOrderList[dayOrderStatus.index].loaded)
+															and (!empty order.dayOrderList[dayOrderStatus.index].orderdate)}"
+												 action="#{backingBean.showOrderOverlay(dayOrderStatus.index,orderStatus.index)}"
+												 disabled="#{!selectionServiceBackingBean.selectionAllSet}"/>
+								<ice:outputText	 escape="false"
+												 value="#{order.dayOrderList[dayOrderStatus.index].tableDisplayText}"
+												 rendered="#{(order.dayOrderList[dayOrderStatus.index].loaded) 
+												 			and ((empty bookServiceBackingBean.currentUser.username) 
+												 				|| (bookServiceBackingBean.currentUser.userid 
+												 					!= order.dayOrderList[dayOrderStatus.index].orderuserid))}"/>
 							</td>
 						</ui:repeat>
 					</tr>

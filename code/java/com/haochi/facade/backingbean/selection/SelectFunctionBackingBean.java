@@ -1,12 +1,14 @@
 package com.haochi.facade.backingbean.selection;
 
 import java.io.Serializable;
+import java.util.prefs.BackingStoreException;
 
 import javax.faces.context.FacesContext;
 
 import com.haochi.facade.backingbean.bookservice.BookServiceBackingBean;
 import com.haochi.platform.persistence.dao.doctorinfo.Doctorinfo;
 import com.haochi.service.docinfo.DocinfoService;
+import com.haochi.service.utility.BackingBeanVisitor;
 import com.haochi.service.utility.CommonConstants;
 import com.haochi.service.utility.PropertyUtils;
 
@@ -21,7 +23,7 @@ public class SelectFunctionBackingBean implements Serializable {
 	private Integer selectedTreatId;
 	private boolean selectionAllSet;
 	
-	private static final String TREATMENT_LIST_KEY_NAME = "treatment_list_value"; 	
+	
 	
 	public SelectFunctionBackingBean() {
 		selectedDocId = CommonConstants.NON_AVALIABLE_CODE;
@@ -35,7 +37,7 @@ public class SelectFunctionBackingBean implements Serializable {
 	 */
 	private void initialTreatList() {
 		String[] treatmentList = PropertyUtils.getInstance()
-				.getProperty(TREATMENT_LIST_KEY_NAME).split(",");
+				.getProperty(CommonConstants.TREATMENT_LIST_KEY_NAME).split(",");
 		treatList = new Treatment[treatmentList.length];
 		for (int i = 0; i < treatmentList.length; i++) {
 			Treatment treatment = new Treatment();
@@ -88,15 +90,12 @@ public class SelectFunctionBackingBean implements Serializable {
 	 * Call the load action in book service backing bean to reload the view with order data.
 	 */
 	private void callBookServiceReload() {
-		FacesContext context = FacesContext.getCurrentInstance();
-		BookServiceBackingBean backingBean = (BookServiceBackingBean)context.getApplication().getELResolver()
-				.getValue(context.getELContext(), null, "bookServiceBackingBean");
-		backingBean.refreshOrders();
+		BackingBeanVisitor.getCurrentBookServiceBackingBean().refreshOrders();
 	}
 	
 	private void updateSelectionCondition() {
-		if(this.selectedDocId != CommonConstants.NON_AVALIABLE_CODE
-				&& this.selectedTreatId != CommonConstants.NON_AVALIABLE_CODE) {
+		if(!this.selectedDocId.equals(CommonConstants.NON_AVALIABLE_CODE) 
+				&& !this.selectedTreatId.equals(CommonConstants.NON_AVALIABLE_CODE)) {
 			this.selectionAllSet = true;
 		}
 	}

@@ -14,6 +14,7 @@ import com.haochi.platform.persistence.dao.order.Order;
 import com.haochi.platform.persistence.dao.userinfo.Userinfo;
 import com.haochi.service.order.BookService;
 import com.haochi.service.userinfo.UserInfoService;
+import com.haochi.service.utility.BackingBeanVisitor;
 import com.haochi.service.utility.CommonConstants;
 import com.haochi.service.utility.DateUtility;
 import com.haochi.service.utility.PropertyUtils;
@@ -57,7 +58,7 @@ public class BookServiceBackingBean extends BaseBackingBean implements Serializa
 	public BookServiceBackingBean() {
 		UserInfoService service = new UserInfoService();
 		dateUtil = DateUtility.getInstance();
-		getCurrentSelectBean();
+		selectBacBean = BackingBeanVisitor.getCurrentSelectBean();
 		headerText = PropertyUtils.getInstance().getProperty(HEADER_STRING_KEY)
 				.split(CommonConstants.STRING_SPLIT_SYMBOL);
 			
@@ -155,8 +156,8 @@ public class BookServiceBackingBean extends BaseBackingBean implements Serializa
 	 */
 	public void loadOrdersFromDB() {
 		BookService service = new BookService();
-		getCurrentSelectBean();
-		if(selectBacBean.isSelectionAllSet()) {
+		selectBacBean = BackingBeanVisitor.getCurrentSelectBean();
+		if(selectBacBean.getSelectedDocId() != CommonConstants.NON_AVALIABLE_CODE) {
 			List<Order> orderList = service.getOrderInCurrentMonth(selectBacBean.getSelectedDocId(), 
 					selectBacBean.getSelectedTreatId());
 			for (int i = 0; i < weekViewList.length; i++) {
@@ -170,6 +171,7 @@ public class BookServiceBackingBean extends BaseBackingBean implements Serializa
 								targetOrder.setOrderdocid(order.getOrderdocid());
 								targetOrder.setOrdertreatmentid(order.getOrdertreatmentid());
 								targetOrder.setOrderuserid(order.getOrderuserid());
+								targetOrder.setOrderinfo(order.getOrderinfo());
 								targetOrder.statusUpdateWhenLoadingFromDB();
 								weekViewList[i].getDayOrderList()[j].setLoaded(true);
 								weekViewList[i].getDayOrderList()[j].processDisplayText();
@@ -179,6 +181,10 @@ public class BookServiceBackingBean extends BaseBackingBean implements Serializa
 				}
 			}
 		}
+	}
+	
+	public void showOrderOverlay(int selectedIndex, int selectedDayIndex) {
+		BackingBeanVisitor.getCurrentOrderBean().showOverlay(selectedIndex, selectedDayIndex);
 	}
 	
 	public void switchViewToLastMonth() {
@@ -193,12 +199,6 @@ public class BookServiceBackingBean extends BaseBackingBean implements Serializa
 	
 	public void refreshOrders() {
 		initialDateGrid();
-	}
-	
-	private void getCurrentSelectBean() {
-		selectBacBean = (SelectFunctionBackingBean) FacesContext.getCurrentInstance().getApplication()
-				.getELResolver().getValue(FacesContext.getCurrentInstance().getELContext(), 
-						null, "selectionServiceBackingBean");
 	}
 	
 	public void toWeekView(int selectedWeekIndex) {

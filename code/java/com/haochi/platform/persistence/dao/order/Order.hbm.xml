@@ -8,10 +8,10 @@
     <class name="com.haochi.platform.persistence.dao.order.Order" table="order" catalog="haochidb">
         <id name="orderid" type="java.lang.Integer">
             <column name="orderid" />
-            <generator class="assigned" />
+            <generator class="identity" />
         </id>
         <property name="orderuserid" type="java.lang.Integer">
-            <column name="orderuserid" not-null="true" />
+            <column name="orderuserid" not-null="false" />
         </property>
         <property name="orderdocid" type="java.lang.Integer">
             <column name="orderdocid" not-null="true" />
@@ -24,6 +24,9 @@
         </property>
         <property name="ordertreatmentid" type="java.lang.String">
             <column name="ordertreatmentid" length="45" not-null="true" />
+        </property>
+        <property name="orderinfo" type="java.lang.String">
+            <column name="orderinfo" length="45" not-null="false" />
         </property>
     </class>
 </hibernate-mapping>
