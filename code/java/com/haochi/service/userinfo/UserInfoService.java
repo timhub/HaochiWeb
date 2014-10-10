@@ -13,13 +13,12 @@ import com.haochi.platform.persistence.dao.userinfo.UserinfoDAO;
  */
 public class UserInfoService {
 
-	private static UserinfoDAO userInfoDao;
 	
 	/**
 	 * Constructor
 	 */
-	public UserInfoService() {
-		userInfoDao = new UserinfoDAO();
+	private UserInfoService() {
+		
 	}
 	
 	/**
@@ -28,6 +27,7 @@ public class UserInfoService {
 	 * @return
 	 */
 	public void addNewUser(Userinfo instance){
+		UserinfoDAO userInfoDao = new UserinfoDAO();
 		userInfoDao.save(instance);
 	}
 	
@@ -52,6 +52,7 @@ public class UserInfoService {
 	 * @param instance
 	 */
 	public void updateUser(Userinfo instance){
+		UserinfoDAO userInfoDao = new UserinfoDAO();
 		userInfoDao.update(instance);
 	}
 	
@@ -60,9 +61,23 @@ public class UserInfoService {
 	 * @param userName
 	 * @return
 	 */
-	public Userinfo findUserByName(String userName) {
+	@SuppressWarnings("rawtypes")
+	public static Userinfo findUserByName(String userName) {
+		UserinfoDAO userInfoDao = new UserinfoDAO();
 		Userinfo userInfo = null;
 		List resultList =  userInfoDao.findByUsername(userName); 
+		if(resultList.size() > 0) {
+			userInfo = (Userinfo) resultList.get(0);
+		}
+		
+		return userInfo;
+	}
+	
+	@SuppressWarnings("rawtypes")
+	public static Userinfo findUserByMail(String userMail) {
+		UserinfoDAO userInfoDao = new UserinfoDAO();
+		Userinfo userInfo = null;
+		List resultList =  userInfoDao.findByUsermailbox((Object)userMail); 
 		if(resultList.size() > 0) {
 			userInfo = (Userinfo) resultList.get(0);
 		}
@@ -75,7 +90,7 @@ public class UserInfoService {
 	 * @param userName
 	 * @return
 	 */
-	public boolean isUserExist(String userName){
+	public static boolean isUserExist(String userName){
 		Userinfo userInfo = null;
 		userInfo = findUserByName(userName);
 		if(userInfo == null) {
@@ -106,6 +121,7 @@ public class UserInfoService {
 	 * @return user name from DB
 	 */
 	public static String getUserNameById(int id) {
+		UserinfoDAO userInfoDao = new UserinfoDAO();
 		return userInfoDao.findById(id).getUsername();
 	}
 

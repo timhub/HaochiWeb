@@ -1,5 +1,5 @@
 $(document).ready(function (){
-	$(document).find('.btn').hover(function (){
+	$(document).find('.header_btn').hover(function (){
 		$(this).toggleClass('btn-embossed btn-primary');
 	})
 });

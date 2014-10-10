@@ -2,26 +2,29 @@ package com.haochi.facade.backingbean.userinfo;
 
 import java.io.Serializable;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
 import com.haochi.facade.backingbean.BaseBackingBean;
 import com.haochi.platform.persistence.dao.userinfo.Userinfo;
 import com.haochi.service.userinfo.UserInfoService;
+import com.haochi.service.utility.PropertyUtils;
 
 public class UserInfoBackingBean extends BaseBackingBean implements Serializable{
 	
 	private static final long serialVersionUID = -5862099643402886795L;
 	
 	private Userinfo user;
-	private String inputName;
+	private String inputMail;
 	private String inputPass;
 	private boolean isLoggedOn;
 	
+	private static final String PASSWORD_ERROR_MSG_KEY = "login_password_error_msg";
 
 	public UserInfoBackingBean() {
 		user = null;
-		inputName = "";
+		inputMail = "";
 		inputPass = "";
 		isLoggedOn = false;
 	}
@@ -30,11 +33,15 @@ public class UserInfoBackingBean extends BaseBackingBean implements Serializable
 	 * The function for login action.
 	 */
 	public void userLogin(){
-		UserInfoService service = new UserInfoService();
-		user = service.findUserByName(inputName);
+		FacesContext context = FacesContext.getCurrentInstance();
+		user = UserInfoService.findUserByMail(inputMail);
 		if(user != null){
 			if(!inputPass.equals(user.getUserpass())){
 				isLoggedOn = false;
+				FacesMessage message = new FacesMessage("login_form:login_err", 
+						PropertyUtils.getInstance().getProperty(PASSWORD_ERROR_MSG_KEY));
+				message.setSeverity(FacesMessage.SEVERITY_ERROR);
+				context.addMessage("login_form:login_err", message);
 			} else {
 				isLoggedOn = true;
 				HttpSession session = (HttpSession)FacesContext.getCurrentInstance()
@@ -59,12 +66,12 @@ public class UserInfoBackingBean extends BaseBackingBean implements Serializable
 		this.user = user;
 	}
 
-	public String getInputName() {
-		return inputName;
+	public String getInputMail() {
+		return inputMail;
 	}
 
-	public void setInputName(String inputName) {
-		this.inputName = inputName;
+	public void setInputMail(String inputMail) {
+		this.inputMail = inputMail;
 	}
 
 	public String getInputPass() {

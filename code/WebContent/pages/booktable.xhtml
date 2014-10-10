@@ -78,14 +78,16 @@
 	   					   value="#{backingBean.weekViewList[backingBean.selectedWeekIndex]
 	   									.dayOrderList[6].dayOrderList}">
 					<tr>
-						<td>
-							<ice:outputText value="#{backingBean.orderBlockStartTime[dayOrderStatus.index]}:00 ~ 
-													#{backingBean.orderBlockStartTime[dayOrderStatus.index] + 2}:00"/>
+						<td class="height2">
+							<h6>
+								#{backingBean.orderBlockStartTime[dayOrderStatus.index]}:00 ~ 
+													#{backingBean.orderBlockStartTime[dayOrderStatus.index] + 2}:00
+							</h6>
 						</td>
 						<ui:repeat var="order" varStatus="orderStatus"
 								   value="#{backingBean.weekViewList[backingBean.selectedWeekIndex]
 	   									.dayOrderList}">
-							<td class="#{order.dayOrderList[dayOrderStatus.index].loaded?'highlight_bgcolor white_text':''}">
+							<td class="#{order.dayOrderList[dayOrderStatus.index].loaded?'highlight_bgcolor white_text':''} height2">
 								<ice:commandLink value="#{order.dayOrderList[dayOrderStatus.index].loaded?'order.dayOrderList[dayOrderStatus.index].tableDisplayText'
 															:msgs.book_table_no_order_text}" 
 												 rendered="#{(!order.dayOrderList[dayOrderStatus.index].loaded)
@@ -95,9 +97,9 @@
 								<ice:outputText	 escape="false"
 												 value="#{order.dayOrderList[dayOrderStatus.index].tableDisplayText}"
 												 rendered="#{(order.dayOrderList[dayOrderStatus.index].loaded) 
-												 			and ((empty bookServiceBackingBean.currentUser.username) 
-												 				|| (bookServiceBackingBean.currentUser.userid 
-												 					!= order.dayOrderList[dayOrderStatus.index].orderuserid))}"/>
+												 			and (empty bookServiceBackingBean.currentUser.username 
+												 			|| order.dayOrderList[dayOrderStatus.index].orderuserid 
+												 				!= bookServiceBackingBean.currentUser.userid)}"/>
 							</td>
 						</ui:repeat>
 					</tr>

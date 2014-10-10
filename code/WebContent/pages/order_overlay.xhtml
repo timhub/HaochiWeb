@@ -7,10 +7,13 @@
 	<ui:define name="order_overlay"/>
 	<ui:param name="backingBean" value="#{orderBackingBean}"/>
 	
-	<ice:panelGroup styleClass="overlay" rendered="#{backingBean.showOrderOverlay}">
+	<ice:panelGroup styleClass="overlay" 
+					rendered="#{backingBean.showOrderOverlay}">
 		<ice:panelGroup styleClass="hard_shaddow margin_auto grid4 hight1 white_bg margin_top160 padding25">
-			<ice:outputText value="#{msgs.order_input_title}" styleClass="title_text"/>
-			<ice:form id="order_form" partialSubmit="false">
+			<ice:outputText value="#{msgs.order_input_title}" 
+							styleClass="title_text"/>
+			<ice:form id="order_form" 
+					  partialSubmit="false">
 				<ice:panelGroup styleClass="float_left margin_top25 text_left">
 					<table>
 						<tr>
@@ -30,7 +33,7 @@
 							</td>
 							<td>
 								<ice:inputText styleClass="form-control grid3 margin_auto input-sm" 
-									value="#{backingBean.userTelephone}"/>
+											   value="#{backingBean.userTelephone}"/>
 							</td>
 						</tr>
 						<tr>
@@ -63,16 +66,22 @@
 								<ice:outputText value="#{msgs.regi_address}"/>
 							</td>
 							<td>
-								<ice:inputTextarea styleClass="not_resize form-control input-sm" value="#{backingBean.userAddress}"/>
+								<ice:inputTextarea styleClass="not_resize form-control input-sm" 
+												   value="#{backingBean.userAddress}"/>
 							</td>
 						</tr>
 					</table>
 				</ice:panelGroup>
+				<ice:panelGroup styleClass="grid5 float_left margin_top25">
+					<ice:outputText value="#{msgs.order_non_login_warning_message}"/>
+				</ice:panelGroup>
 				<ice:panelGroup styleClass="margin_top25 float_right grid5">
-					<ice:commandButton value="#{msgs.confirm_text}" styleClass="btn btn-primary" 
-							action="#{backingBean.submitOrder}"/>
-					<ice:commandButton value="#{msgs.cancel_text}" styleClass="float_right btn btn-default margin_left60" 
-							action="#{backingBean.hideOverlay}"/>
+					<ice:commandButton value="#{msgs.confirm_text}" 
+									   styleClass="btn btn-primary" 
+									   action="#{backingBean.submitOrder}"/>
+					<ice:commandButton value="#{msgs.cancel_text}" 
+									   styleClass="float_right btn btn-default margin_left60" 
+									   action="#{backingBean.hideOverlay}"/>
 				</ice:panelGroup>
 			</ice:form>
 		</ice:panelGroup>
