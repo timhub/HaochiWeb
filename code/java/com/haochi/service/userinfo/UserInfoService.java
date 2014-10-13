@@ -17,7 +17,7 @@ public class UserInfoService {
 	/**
 	 * Constructor
 	 */
-	private UserInfoService() {
+	public UserInfoService() {
 		
 	}
 	

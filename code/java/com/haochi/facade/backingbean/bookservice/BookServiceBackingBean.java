@@ -141,6 +141,7 @@ public class BookServiceBackingBean extends BaseBackingBean implements Serializa
 	private OrderDayView initialDay() {
 		OrderDayView dayView = new OrderDayView();
 		Order[] orderList = new Order[4];
+		dayView.setOrderable(DateUtility.isBeforeDate(dateUtil.getCalendar().getTime()));
 		for(int dayOrderNumber = 0; dayOrderNumber < 4; dayOrderNumber ++) {
 			Order newOrder = new Order();
 			newOrder.setOrderdate(dateUtil.getCalendar().getTime());

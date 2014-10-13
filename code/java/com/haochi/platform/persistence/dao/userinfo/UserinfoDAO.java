@@ -69,7 +69,7 @@ public class UserinfoDAO extends BaseHibernateDAO {
 		log.debug("getting Userinfo instance with id: " + id);
 		try {
 			Userinfo instance = (Userinfo) getSession().get(
-					"com.haochi.platform.persistence.dao.Userinfo", id);
+					"com.haochi.platform.persistence.dao.userinfo.Userinfo", id);
 			return instance;
 		} catch (RuntimeException re) {
 			log.error("get failed", re);
@@ -82,7 +82,7 @@ public class UserinfoDAO extends BaseHibernateDAO {
 		try {
 			List results = getSession()
 					.createCriteria(
-							"com.haochi.platform.persistence.dao.Userinfo")
+							"com.haochi.platform.persistence.dao.userinfo.Userinfo")
 					.add(Example.create(instance)).list();
 			log.debug("find by example successful, result size: "
 					+ results.size());

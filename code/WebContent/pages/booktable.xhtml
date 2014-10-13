@@ -40,9 +40,10 @@
 					<tr>
 						<ui:repeat varStatus="dayStatus" var="dayItem" value="#{weekItem.dayOrderList}">
 							<td class="#{(status.index == 0)?'':'border_top border_left'} 
-							#{dayItem.loaded?(dayItem.fullLoaded?'light_greenbg white_text':
+							#{dayItem.loaded and !dayItem.orderable?(dayItem.fullLoaded?'light_greenbg white_text':
 								'highlight_bgcolor white_text'):''}">
-								<ice:commandLink action="#{backingBean.toWeekView(weekStatus.index)}">
+								<ice:commandLink action="#{backingBean.toWeekView(weekStatus.index)}"
+												 disabled="#{dayItem.orderable}">
 									<ice:panelGroup>
 										<ice:outputText escape="false" value="#{dayItem.displayText}"/>
 									</ice:panelGroup>

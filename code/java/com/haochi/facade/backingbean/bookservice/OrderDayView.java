@@ -13,8 +13,9 @@ public class OrderDayView implements Serializable{
 	private Order[] dayOrderList = new Order[4];
 	private String displayText;
 	private String weekViewDisplayText;
-	private boolean loaded;
+	private boolean loaded = false;
 	private boolean fullLoaded = false;
+	private boolean orderable = false;
 	
 	private static final String BASE_DISPLAY_TEXT = "book_month_view_text";
 	private static final String BASE_WEEK_VIEW_DISPLAY_TEXT = "book_table_month_date_text";
@@ -99,6 +100,14 @@ public class OrderDayView implements Serializable{
 
 	public void setWeekViewDisplayText(String weekViewDisplayText) {
 		this.weekViewDisplayText = weekViewDisplayText;
+	}
+
+	public boolean getOrderable() {
+		return orderable;
+	}
+
+	public void setOrderable(boolean orderable) {
+		this.orderable = orderable;
 	}
 
 }

@@ -1,0 +1,66 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+  				xmlns:ui="http://java.sun.com/jsf/facelets"
+			    xmlns:h="http://java.sun.com/jsf/html"
+			    xmlns:f="http://java.sun.com/jsf/core"
+			    xmlns:ice="http://www.icesoft.com/icefaces/component"
+			    xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
+	
+	<ui:define name="user_login"/>
+	<ui:param name="backingBean" value="#{userInfoBackingBean}"/>
+	<ice:panelGroup styleClass="col-lg-4 text_center light_graybg padding25" 
+							rendered="#{!backingBean.isLoggedOn}">
+		<h4 class="main_color">
+			#{msgs.login_title}
+		</h4>
+			
+		<ice:form id="login_form" partialSubmit="true">
+			<table>
+				<tr>
+					<td>
+						<ice:outputText value="#{msgs.login_usermailbox}"
+										styleClass="margin_right25"/>
+					</td>
+					<td>
+						<ice:inputText value="#{backingBean.inputMail}"
+						   			   styleClass="form-control grid3 margin_auto input-sm"/>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<ice:outputText value="#{msgs.login_password}"
+										styleClass="margin_right25"/>
+					</td>
+					<td>
+						<ice:inputSecret value="#{backingBean.inputPass}" 
+										 styleClass="form-control grid3 margin_auto input-sm"/>
+					</td>
+				</tr>
+			</table>
+			<ice:panelGroup>
+				<ice:outputText value="#{backingBean.errorMessage}" 
+								rendered="#{!empty backingBean.errorMessage}"
+								styleClass="red_text"/>
+			</ice:panelGroup>
+			<ice:commandButton value="#{msgs.login_log_text}" 
+							   styleClass="btn btn-primary margin_top25" 
+							   action="#{backingBean.userLogin}"/>
+			<ice:commandButton value="#{msgs.login_register}" 
+							   styleClass="btn btn-info margin_left60 margin_top25"
+							   action="#{userRegisterBackingBean.displayOverlay}"/>
+		</ice:form>
+	</ice:panelGroup>
+	<ice:panelGroup rendered="#{backingBean.isLoggedOn}"
+					styleClass="light_graybg padding25 col-lg-4">
+		<ice:form id="login_userops">
+			<h4 class="main_color">
+				#{msgs.login_welcome} #{backingBean.user.username}
+			</h4>
+			<ice:commandLink value="#{msgs.login_edit_info_msg}"
+							 action="#{userRegisterBackingBean.displayOverlay}"/>
+			<br/>
+			<ice:commandLink value="#{msgs.login_exit_login}"
+							 action="#{backingBean.quitLoggin}"/>
+			<br/>
+		</ice:form>
+	</ice:panelGroup>
+</ui:composition>

@@ -24,7 +24,8 @@
 								<ice:inputText styleClass="form-control grid3 margin_auto input-sm" 
 											   value="#{backingBean.userName}" 
 											   rendered="#{empty backingBean.bookBackingBean.currentUser}"/>
-							   	<ice:outputText value="#{backingBean.bookBackingBean.currentUser.username}"/>
+							   	<ice:outputText value="#{backingBean.bookBackingBean.currentUser.username}"
+							   					rendered="#{!empty backingBean.bookBackingBean.currentUser}"/>
 							</td>
 						</tr>
 						<tr>
@@ -33,7 +34,10 @@
 							</td>
 							<td>
 								<ice:inputText styleClass="form-control grid3 margin_auto input-sm" 
-											   value="#{backingBean.userTelephone}"/>
+											   value="#{backingBean.userTelephone}"
+											   rendered="#{empty backingBean.bookBackingBean.currentUser}"/>
+								<ice:outputText value="#{backingBean.bookBackingBean.currentUser.userphone}"
+												rendered="#{!empty backingBean.bookBackingBean.currentUser}"/>
 							</td>
 						</tr>
 						<tr>
@@ -67,7 +71,10 @@
 							</td>
 							<td>
 								<ice:inputTextarea styleClass="not_resize form-control input-sm" 
-												   value="#{backingBean.userAddress}"/>
+												   value="#{backingBean.userAddress}"
+												   rendered="#{empty backingBean.bookBackingBean.currentUser}"/>
+							   	<ice:outputText value="#{backingBean.bookBackingBean.currentUser.useraddress}"
+							   				   rendered="#{!empty backingBean.bookBackingBean.currentUser}"/>
 							</td>
 						</tr>
 					</table>

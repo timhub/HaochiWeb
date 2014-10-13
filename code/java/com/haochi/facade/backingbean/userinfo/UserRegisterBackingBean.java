@@ -2,7 +2,11 @@ package com.haochi.facade.backingbean.userinfo;
 
 import java.io.Serializable;
 
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
+
 import com.haochi.facade.backingbean.BaseBackingBean;
+import com.haochi.platform.persistence.dao.userinfo.Userinfo;
 import com.haochi.service.userinfo.UserInfoService;
 
 public class UserRegisterBackingBean extends BaseBackingBean 
@@ -20,26 +24,50 @@ public class UserRegisterBackingBean extends BaseBackingBean
 	
 	private boolean showOverlay;
 	private boolean inputValidation;
-
+	
 	public UserRegisterBackingBean() {
-		this.showOverlay = false;
-		this.username = "";
-		this.userpass = "";
-		this.useraddress = "";
-		this.userphone = "";
-		this.usergenda = 0;
-		this.usermailbox = "";
+		reloadUserData();
 	}
 	
 	/**
 	 * Control the overlay displays or not.
 	 */
 	public void displayOverlay() {
+		reloadUserData();
 		this.showOverlay = true;
+	}
+	
+	private void reloadUserData() {
+		HttpSession session = getSessionData();
+		if(session.getAttribute("username") == null) {
+			this.showOverlay = false;
+			this.username = "";
+			this.userpass = "";
+			this.useraddress = "";
+			this.userphone = "";
+			this.usergenda = 0;
+			this.usermailbox = "";
+		} else {
+			String userName = (String) session.getAttribute("username");
+			Userinfo user = UserInfoService.findUserByName(userName);
+			if(user != null) {
+				this.username = user.getUsername();
+				this.userpass = user.getUserpass();
+				this.useraddress = user.getUseraddress();
+				this.userphone = user.getUserphone();
+				this.usergenda = user.getUsergenda();
+				this.usermailbox = user.getUsermailbox();
+			}
+		}
 	}
 	
 	public void hideOverlay() {
 		this.showOverlay = false;
+	}
+	
+	private HttpSession getSessionData() {
+		return (HttpSession)FacesContext.getCurrentInstance()
+				.getExternalContext().getSession(true);
 	}
 	
 	/**

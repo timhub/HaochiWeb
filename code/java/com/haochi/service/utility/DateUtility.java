@@ -17,7 +17,7 @@ public class DateUtility implements Serializable{
 	static DateUtility instance = null;
 	
 	private Calendar calendar;
-	private Date currentDate;
+	private static Date currentDate;
 	private int currentMonth;
 	private int currentDayOfWeek;
 	
@@ -50,6 +50,14 @@ public class DateUtility implements Serializable{
 			result = true;
 		}
 		
+		return result;
+	}
+	
+	public static boolean isBeforeDate(Date targetDate) {
+		boolean result = false;
+		if(targetDate.before(currentDate)){
+			result = true;
+		}
 		return result;
 	}
 	
@@ -86,7 +94,7 @@ public class DateUtility implements Serializable{
 	}
 
 	public void setCurrentDate(Date currentDate) {
-		this.currentDate = currentDate;
+		DateUtility.currentDate = currentDate;
 	}
 
 	public int getCurrentMonth() {

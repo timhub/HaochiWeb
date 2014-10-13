@@ -23,7 +23,7 @@ public class BookService {
 		String baseDate = DateUtility.getInstance().getCalendar().get(Calendar.YEAR) 
 				+ "-" + (month > 9 ? month : "0" + month);
 		String startDate = baseDate + "-01";
-		String endDate = baseDate + "-" + (maxDay - 1);
+		String endDate = baseDate + "-" + (maxDay + 1);
 		resultList = orderDao.findByMonthView(startDate, endDate, docId);
 		
 		return resultList;

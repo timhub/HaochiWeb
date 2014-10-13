@@ -19,31 +19,32 @@ public class UserInfoBackingBean extends BaseBackingBean implements Serializable
 	private String inputMail;
 	private String inputPass;
 	private boolean isLoggedOn;
+	private String errorMessage;
 	
 	private static final String PASSWORD_ERROR_MSG_KEY = "login_password_error_msg";
+	private static final String ACCOUNT_NOT_EXIST_MSG_KEY = "login_account_error";
 
 	public UserInfoBackingBean() {
 		user = null;
-		inputMail = "";
-		inputPass = "";
+		clearInput();
 		isLoggedOn = false;
+		errorMessage = "";
 	}
 	
 	/**
 	 * The function for login action.
 	 */
 	public void userLogin(){
-		FacesContext context = FacesContext.getCurrentInstance();
 		user = UserInfoService.findUserByMail(inputMail);
 		if(user != null){
 			if(!inputPass.equals(user.getUserpass())){
 				isLoggedOn = false;
-				FacesMessage message = new FacesMessage("login_form:login_err", 
-						PropertyUtils.getInstance().getProperty(PASSWORD_ERROR_MSG_KEY));
-				message.setSeverity(FacesMessage.SEVERITY_ERROR);
-				context.addMessage("login_form:login_err", message);
+				clearInput();
+				errorMessage = PropertyUtils.getInstance().getProperty(PASSWORD_ERROR_MSG_KEY);
 			} else {
 				isLoggedOn = true;
+				clearInput();
+				errorMessage = "";
 				HttpSession session = (HttpSession)FacesContext.getCurrentInstance()
 						.getExternalContext().getSession(true);
 				session.setAttribute("username", user.getUsername());
@@ -51,7 +52,23 @@ public class UserInfoBackingBean extends BaseBackingBean implements Serializable
 			}
 		} else {
 			isLoggedOn = false;
+			errorMessage = PropertyUtils.getInstance().getProperty(ACCOUNT_NOT_EXIST_MSG_KEY);
+			clearInput();
 		}
+	}
+	
+	public void quitLoggin() {
+		HttpSession session = (HttpSession)FacesContext.getCurrentInstance()
+				.getExternalContext().getSession(true);
+		session.setAttribute("username", null);
+		session.setAttribute("userid", null);
+		this.user = null;
+		this.isLoggedOn = false;
+	}
+	
+	private void clearInput() {
+		inputMail = "";
+		inputPass = "";
 	}
 	
 	public String toBookPage() {
@@ -88,5 +105,13 @@ public class UserInfoBackingBean extends BaseBackingBean implements Serializable
 
 	public void setIsLoggedOn(boolean isLoggedOn) {
 		this.isLoggedOn = isLoggedOn;
+	}
+
+	public String getErrorMessage() {
+		return errorMessage;
+	}
+
+	public void setErrorMessage(String errorMessage) {
+		this.errorMessage = errorMessage;
 	}
 }

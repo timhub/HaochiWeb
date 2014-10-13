@@ -10,52 +10,7 @@
 	
 	<ice:panelGroup styleClass="container marketing">
 		<ice:panelGroup id="infobar" styleClass="row margin_top25">
-			<ice:panelGroup styleClass="col-lg-4 text_center light_graybg padding25" 
-							rendered="#{!backingBean.isLoggedOn}">
-				<h4 class="main_color">
-					#{msgs.login_title}
-				</h4>
-					
-				<ice:form id="login_form" partialSubmit="true">
-					<table>
-						<tr>
-							<td>
-								<ice:outputText value="#{msgs.login_usermailbox}"
-												styleClass="margin_right25"/>
-							</td>
-							<td>
-								<ice:inputText value="#{backingBean.inputMail}"
-								   			   styleClass="form-control grid3 margin_auto input-sm"/>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<ice:outputText value="#{msgs.login_password}"
-												styleClass="margin_right25"/>
-							</td>
-							<td>
-								<ice:inputSecret value="#{backingBean.inputPass}" 
-												 styleClass="form-control grid3 margin_auto input-sm"/>
-							</td>
-						</tr>
-					</table>
-					<ice:panelGroup>
-						<ice:message for="login_err" styleClass="red_text"/>
-					</ice:panelGroup>
-					<ice:commandButton value="#{msgs.login_log_text}" 
-									   styleClass="btn btn-primary margin_top25" 
-									   action="#{backingBean.userLogin}"/>
-					<ice:commandButton value="#{msgs.login_register}" 
-									   styleClass="btn btn-info margin_left60 margin_top25"
-									   action="#{userRegisterBackingBean.displayOverlay}"/>
-				</ice:form>
-			</ice:panelGroup>
-			<ice:panelGroup rendered="#{backingBean.isLoggedOn}">
-				<h4 class="main_color">
-					#{msgs.login_welcome}
-				</h4>
-				<br/>
-			</ice:panelGroup>
+			<ui:include src="/pages/userlogin.xhtml"/>
 		</ice:panelGroup>
 	</ice:panelGroup>
 </ui:composition>

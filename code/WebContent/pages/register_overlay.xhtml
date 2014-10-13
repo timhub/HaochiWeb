@@ -9,7 +9,8 @@
 	
 	<ice:panelGroup styleClass="overlay" rendered="#{backingBean.showOverlay}">
 		<ice:panelGroup id="registerbox" styleClass="hard_shaddow margin_auto grid4 hight1 white_bg margin_top160 padding25">
-			<ice:outputText value="#{msgs.regi_title}" styleClass="title_text"/>
+			<ice:outputText value="#{!(userInfoBackingBean.isLoggedOn)?msgs.regi_title:msgs.login_edit_info_msg}" 
+							styleClass="title_text"/>
 			<ice:form id="register_form" partialSubmit="false">
 				<ice:panelGroup styleClass="float_left margin_top25 text_left" >
 					<table>
