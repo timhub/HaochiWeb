@@ -29,11 +29,14 @@ public class OrderBackingBean extends BaseBackingBean implements Serializable {
 	private BookServiceBackingBean bookBackingBean;
 	private SelectFunctionBackingBean selectBackingBean;
 	
+	private boolean inputValid;
+	
 	private boolean showOrderOverlay;
 	
 	private static final String TREAT_NAME_LIST_KEY = "treatment_list_value";
 	
 	public OrderBackingBean() {
+		inputValid = true;
 		bookBackingBean = BackingBeanVisitor.getCurrentBookServiceBackingBean();
 		setSelectBackingBean(BackingBeanVisitor.getCurrentSelectBean());
 	}
@@ -67,9 +70,28 @@ public class OrderBackingBean extends BaseBackingBean implements Serializable {
 		instance.setOrdertreatmentid(selectBackingBean.getSelectedTreatId().toString());
 		instance.setOrderinfo(orderinfo);
 		
-		BookService.updateOrder(instance);
-		bookBackingBean.refreshOrders();
-		hideOverlay();
+		checkInput();
+		if(inputValid) {
+			BookService.updateOrder(instance);
+			bookBackingBean.refreshOrders();
+			hideOverlay();
+		}
+	}
+	
+	private void checkInput() {
+		if(bookBackingBean.getCurrentUser() != null) {
+			inputValid = true;
+		} else {
+			if(!"".equals(userName) && !"".equals(userAddress) && !"".equals(userTelephone)) {
+				inputValid = true;
+			} else {
+				inputValid = false;
+			}
+		}
+	}
+	
+	public void cancelOrder() {
+		
 	}
 	
 	public void showOverlay(int selectedIndex, int selectedDayIndex) {
@@ -169,6 +191,14 @@ public class OrderBackingBean extends BaseBackingBean implements Serializable {
 
 	public void setOrderDayIndex(int orderDayIndex) {
 		this.orderDayIndex = orderDayIndex;
+	}
+
+	public boolean getInputValid() {
+		return inputValid;
+	}
+
+	public void setInputValid(boolean inputValid) {
+		this.inputValid = inputValid;
 	}
 
 	

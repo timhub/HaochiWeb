@@ -22,7 +22,9 @@ table td{padding-top: 10px;}
 
 .hight1{min-height: 550px;}
 .height2{height: 60px;}
+.height3{height:20px;}
 .not_resize{resize: none;}
+.space{height: 200px;}
 
 /* borders */
 .border_top{border-top:1px; border-color: gray;}
@@ -39,6 +41,7 @@ table td{padding-top: 10px;}
 .margin_top40{margin-top: 40px;}
 .margin_top50{margin-top: 50px;}
 .margin_top160{margin-top: 160px;}
+.margin_top200{margin-top: 200px;}
 .margin_left25{margin-left:25px;}
 .margin_left50{margin-left:50px;}
 .margin_left60{margin-left:60px;}

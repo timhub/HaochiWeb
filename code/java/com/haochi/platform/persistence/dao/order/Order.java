@@ -2,8 +2,6 @@ package com.haochi.platform.persistence.dao.order;
 
 import java.util.Date;
 
-import org.hibernate.Transaction;
-
 import com.google.gson.Gson;
 import com.haochi.facade.backingbean.bookservice.OrderInfoTransaction;
 import com.haochi.service.userinfo.UserInfoService;

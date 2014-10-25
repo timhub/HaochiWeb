@@ -17,7 +17,7 @@
 				<ice:panelGroup styleClass="float_left margin_top25 text_left">
 					<table>
 						<tr>
-							<td>
+							<td class="text_right">
 								<ice:outputText value="#{msgs.order_input_user_name}"/>
 							</td>
 							<td>
@@ -29,7 +29,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td>
+							<td class="text_right">
 								<ice:outputText value="#{msgs.regi_phone}"/>
 							</td>
 							<td>
@@ -41,7 +41,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td>
+							<td class="text_right">
 								<ice:outputText value="#{msgs.order_input_docname_text}"/>
 							</td>
 							<td>
@@ -49,7 +49,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td>
+							<td class="text_right">
 								<ice:outputText value="#{msgs.order_input_treat_name_text}"/>
 							</td>
 							<td>
@@ -57,7 +57,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td>
+							<td class="text_right">
 								<ice:outputText value="#{msgs.order_input_order_time}"/>
 							</td>
 							<td>
@@ -66,7 +66,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td>
+							<td class="text_right">
 								<ice:outputText value="#{msgs.regi_address}"/>
 							</td>
 							<td>
@@ -81,6 +81,11 @@
 				</ice:panelGroup>
 				<ice:panelGroup styleClass="grid5 float_left margin_top25">
 					<ice:outputText value="#{msgs.order_non_login_warning_message}"/>
+				</ice:panelGroup>
+				<ice:panelGroup styleClass="grid5 float_left height3" >
+					<ice:outputText value="#{msgs.order_empty_input_error_msg}"
+									styleClass="red_text"
+									rendered="#{empty backingBean.bookBackingBean.currentUser and !backingBean.inputValid}"/>
 				</ice:panelGroup>
 				<ice:panelGroup styleClass="margin_top25 float_right grid5">
 					<ice:commandButton value="#{msgs.confirm_text}" 

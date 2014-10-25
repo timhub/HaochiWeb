@@ -89,12 +89,18 @@
 								   value="#{backingBean.weekViewList[backingBean.selectedWeekIndex]
 	   									.dayOrderList}">
 							<td class="#{order.dayOrderList[dayOrderStatus.index].loaded?'highlight_bgcolor white_text':''} height2">
-								<ice:commandLink value="#{order.dayOrderList[dayOrderStatus.index].loaded?'order.dayOrderList[dayOrderStatus.index].tableDisplayText'
-															:msgs.book_table_no_order_text}" 
-												 rendered="#{(!order.dayOrderList[dayOrderStatus.index].loaded)
-															and (!empty order.dayOrderList[dayOrderStatus.index].orderdate)}"
+								<ice:commandLink rendered="#{((!order.dayOrderList[dayOrderStatus.index].loaded)
+															and (!empty order.dayOrderList[dayOrderStatus.index].orderdate))
+																or ((order.dayOrderList[dayOrderStatus.index].loaded) 
+												 			and (!empty bookServiceBackingBean.currentUser.username 
+												 			|| order.dayOrderList[dayOrderStatus.index].orderuserid 
+												 				== bookServiceBackingBean.currentUser.userid))}"
 												 action="#{backingBean.showOrderOverlay(dayOrderStatus.index,orderStatus.index)}"
-												 disabled="#{!selectionServiceBackingBean.selectionAllSet}"/>
+												 disabled="#{!selectionServiceBackingBean.selectionAllSet or order.orderable}">
+									<ice:outputText value="#{order.dayOrderList[dayOrderStatus.index].loaded?order.dayOrderList[dayOrderStatus.index].tableDisplayText
+															:msgs.book_table_no_order_text}" 
+													escape="false"/>
+								</ice:commandLink>
 								<ice:outputText	 escape="false"
 												 value="#{order.dayOrderList[dayOrderStatus.index].tableDisplayText}"
 												 rendered="#{(order.dayOrderList[dayOrderStatus.index].loaded) 

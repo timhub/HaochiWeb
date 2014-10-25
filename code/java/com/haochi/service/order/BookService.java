@@ -29,6 +29,10 @@ public class BookService {
 		return resultList;
 	}
 	
+	public static void deleteOrderByInfo(int userId, int docId, int startBlock,int treatmentId, String orderDate) {
+		
+	}
+	
 	public static void updateOrder(Order instance) {
 		orderDao.save(instance);
 	}
