@@ -44,7 +44,7 @@
 								'highlight_bgcolor white_text'):''}">
 								<ice:commandLink action="#{backingBean.toWeekView(weekStatus.index)}"
 												 disabled="#{dayItem.orderable}">
-									<ice:panelGroup>
+									<ice:panelGroup styleClass="text_right">
 										<ice:outputText escape="false" value="#{dayItem.displayText}"/>
 									</ice:panelGroup>
 								</ice:commandLink>
@@ -76,7 +76,7 @@
 					</ui:repeat>
 				</tr>
 	   			<ui:repeat var="text" varStatus="dayOrderStatus"
-	   					   value="#{backingBean.weekViewList[backingBean.selectedWeekIndex]
+	   					   value="#{backingBean.weekViewList[1]
 	   									.dayOrderList[6].dayOrderList}">
 					<tr>
 						<td class="height2">

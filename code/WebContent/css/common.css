@@ -9,7 +9,7 @@ table td{padding-top: 10px;}
 
 /* template */
 .logo{display:block;}
-.navBarContainer{margin-left: auto; margin-right: auto; width: 1100px;}
+.navBarContainer{margin-left: auto; margin-right: auto; width: 1200px;}
 .logospacing{margin-top: 10px;}
 .logo{width:100px; height:99px; margin-top: 10px; background-image: url("../images/logo_sm.png"); display: block;}
 
@@ -23,6 +23,7 @@ table td{padding-top: 10px;}
 .hight1{min-height: 550px;}
 .height2{height: 60px;}
 .height3{height:20px;}
+.height4{height: 400px;}
 .not_resize{resize: none;}
 .space{height: 200px;}
 
