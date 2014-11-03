@@ -14,8 +14,6 @@ public class DateUtility implements Serializable{
 	
 	private static final long serialVersionUID = 6315634455208343229L;
 
-	static DateUtility instance = null;
-	
 	private Calendar calendar;
 	private static Date currentDate;
 	private int currentMonth;
@@ -27,17 +25,6 @@ public class DateUtility implements Serializable{
 		//Get current date time.
 		calendar = Calendar.getInstance();
 		currentMonth = calendar.get(Calendar.MONTH);
-	}
-	
-	/**
-	 * Return an instance of this utility.
-	 * @return
-	 */
-	public static DateUtility getInstance() {
-		if (instance == null) {
-			instance = new DateUtility();
-		}
-		return instance;
 	}
 	
 	public static boolean isSameDate(Date date1, Date date2) {
@@ -112,10 +99,5 @@ public class DateUtility implements Serializable{
 	public void setCurrentDayOfWeek(int currentDayOfWeek) {
 		this.currentDayOfWeek = currentDayOfWeek;
 	}
-
-	public static void setInstance(DateUtility instance) {
-		DateUtility.instance = instance;
-	}
-	
 	
 }

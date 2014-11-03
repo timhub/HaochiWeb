@@ -57,7 +57,7 @@ public class BookServiceBackingBean extends BaseBackingBean implements Serializa
 	
 	public BookServiceBackingBean() {
 		UserInfoService service = new UserInfoService();
-		dateUtil = DateUtility.getInstance();
+		dateUtil = new DateUtility();
 		selectBacBean = BackingBeanVisitor.getCurrentSelectBean();
 		headerText = PropertyUtils.getInstance().getProperty(HEADER_STRING_KEY)
 				.split(CommonConstants.STRING_SPLIT_SYMBOL);
