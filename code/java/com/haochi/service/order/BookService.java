@@ -18,13 +18,13 @@ public class BookService {
 	}
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public List<Order> getOrderInCurrentMonth(int docId, int treatId) {
+	public List<Order> getOrderInCurrentMonth(int docId, int treatId, int currentMonth) {
 		List resultList = null;
 		
-		int month = dateUtil.getCalendar().get(Calendar.MONTH);
+		dateUtil.setCurrentMonth(currentMonth);
 		int maxDay = dateUtil.getCalendar().getActualMaximum(Calendar.DAY_OF_MONTH);
 		String baseDate = dateUtil.getCalendar().get(Calendar.YEAR) 
-				+ "-" + (month > 9 ? month : "0" + month);
+				+ "-" + (currentMonth > 9 ? currentMonth : "0" + currentMonth);
 		String startDate = baseDate + "-01";
 		String endDate = baseDate + "-" + (maxDay + 1);
 		resultList = orderDao.findByMonthView(startDate, endDate, docId);

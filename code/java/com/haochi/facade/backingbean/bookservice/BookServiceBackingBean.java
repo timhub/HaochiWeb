@@ -160,7 +160,7 @@ public class BookServiceBackingBean extends BaseBackingBean implements Serializa
 		selectBacBean = BackingBeanVisitor.getCurrentSelectBean();
 		if(selectBacBean.getSelectedDocId() != CommonConstants.NON_AVALIABLE_CODE) {
 			List<Order> orderList = service.getOrderInCurrentMonth(selectBacBean.getSelectedDocId(), 
-					selectBacBean.getSelectedTreatId());
+					selectBacBean.getSelectedTreatId(), currentMonth);
 			for (int i = 0; i < weekViewList.length; i++) {
 				for (int j = 0; j < weekViewList[i].getDayOrderList().length; j++) {
 					for (Order order : orderList) {
