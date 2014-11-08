@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<proxool>  
+    <alias>DBPool</alias>
+    <driver-url>jdbc:mysql://localhost:3306/haochidb</driver-url> 
+    <driver-class>com.mysql.jdbc.Driver</driver-class>
+    <driver-properties>  
+        <property name="user" value="root"/> 
+        <property name="password" value="111111"/>
+    </driver-properties>   
+    <maximum-connection-count>10</maximum-connection-count>   
+    <test-before-use>true</test-before-use>  
+    <house-keeping-test-sql>select userid from userinfo</house-keeping-test-sql>  
+</proxool>  
