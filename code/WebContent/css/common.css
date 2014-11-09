@@ -109,3 +109,11 @@ table td{padding-top: 10px;}
 	-webkit-box-shadow:1px 3px 7px -4px rgba(20%,20%,40%,0.3);
 	box-shadow:1px 3px 7px -4px rgba(20%,20%,40%,0.3);
 }
+
+.round_border{
+	padding:10px;
+    border: 5px solid #dedede;
+    -moz-border-radius: 15px;      /* Gecko browsers */
+    -webkit-border-radius: 15px;   /* Webkit browsers */
+    border-radius:15px;            /* W3C syntax */
+}

@@ -8,7 +8,7 @@
 	<ui:param name="backingBean" value="#{userRegisterBackingBean}"/>
 	
 	<ice:panelGroup styleClass="overlay" rendered="#{backingBean.showOverlay}">
-		<ice:panelGroup id="registerbox" styleClass="hard_shaddow margin_auto grid4 hight1 white_bg margin_top160 padding25">
+		<ice:panelGroup id="registerbox" styleClass="round_border hard_shaddow margin_auto grid4 hight1 white_bg margin_top160 ">
 			<ice:outputText value="#{!(userInfoBackingBean.isLoggedOn)?msgs.regi_title:msgs.login_edit_info_msg}" 
 							styleClass="title_text"/>
 			<ice:form id="register_form" partialSubmit="false">
@@ -20,7 +20,24 @@
 							</td>
 							<td>
 								<ice:inputText styleClass="form-control grid3 margin_auto input-sm" 
-									value="#{backingBean.usermailbox}"/>
+									value="#{backingBean.usermailbox}"
+									validator="#{backingBean.validateMailbox}"
+									partialSubmit="true"/>
+								<ice:message for="mailValidate" style="color:#25B627" />
+							</td>
+							<td>
+								<ice:outputText rendered="#{backingBean.checkMail == 2}"
+												value="#{msgs.regi_ok_text}"
+												styleClass="main_color margin_left25"/>
+								<ice:outputText rendered="#{backingBean.checkMail == 0}"
+												value="#{msgs.regi_mail_existed}"
+												styleClass="red_text margin_left25"/>
+								<ice:outputText rendered="#{backingBean.checkMail == 1}"
+												value="#{msgs.regi_mail_not_match}"
+												styleClass="red_text margin_left25"/>
+								<ice:outputText rendered="#{backingBean.checkMail == 3}"
+												value="#{msgs.regi_mail_not_null}"
+												styleClass="red_text margin_left25"/>
 							</td>
 						</tr>
 						<tr>
@@ -29,7 +46,17 @@
 							</td>
 							<td>
 								<ice:inputText styleClass="form-control grid3 margin_auto input-sm" 
-									value="#{backingBean.username}"/>
+									value="#{backingBean.username}"
+									validator="#{backingBean.validateUserName}"
+									partialSubmit="true"/>
+							</td>
+							<td>
+								<ice:outputText rendered="#{backingBean.checkName == 1}"
+												value="#{msgs.regi_ok_text}"
+												styleClass="main_color margin_left25"/>
+								<ice:outputText rendered="#{backingBean.checkName == 0}"
+												value="#{msgs.regi_name_not_noll}"
+												styleClass="red_text margin_left25"/>
 							</td>
 						</tr>
 						<tr>
@@ -38,7 +65,18 @@
 							</td>
 							<td>
 								<ice:inputSecret styleClass="form-control grid3 margin_auto input-sm" 
-									value="#{backingBean.userpass}"/>
+												 value="#{backingBean.userpass}"
+												 validator="#{backingBean.validatePass}"
+												 redisplay="true"
+												 partialSubmit="true"/>
+							</td>
+							<td>
+								<ice:outputText rendered="#{backingBean.checkPass == 1}"
+												value="#{msgs.regi_ok_text}"
+												styleClass="main_color margin_left25"/>
+								<ice:outputText rendered="#{backingBean.checkPass == 0}"
+												value="#{msgs.regi_pass_too_short}"
+												styleClass="red_text margin_left25"/>
 							</td>
 						</tr>
 						<tr>
@@ -47,7 +85,18 @@
 							</td>
 							<td>
 								<ice:inputSecret styleClass="form-control grid3 margin_auto input-sm" 
-									value="#{backingBean.userpassConfirm}"/>
+												 value="#{backingBean.userpassConfirm}"
+												 validator="#{backingBean.validatePassConfirm}"
+												 redisplay="true"
+												 partialSubmit="true"/>
+							</td>
+							<td>
+								<ice:outputText rendered="#{backingBean.checkPassConfirm == 1}"
+												value="#{msgs.regi_ok_text}"
+												styleClass="main_color margin_left25"/>
+								<ice:outputText rendered="#{backingBean.checkPassConfirm == 0}"
+												value="#{msgs.regi_pass_not_same}"
+												styleClass="red_text margin_left25"/>
 							</td>
 						</tr>
 						<tr>
@@ -56,7 +105,17 @@
 							</td>
 							<td>
 								<ice:inputText styleClass="form-control grid3 margin_auto input-sm" 
-									value="#{backingBean.userphone}"/>
+											   value="#{backingBean.userphone}"
+											   validator="#{backingBean.validatePhone}"
+											   partialSubmit="true"/>
+							</td>
+							<td>
+								<ice:outputText rendered="#{backingBean.checkPhone == 1}"
+												value="#{msgs.regi_ok_text}"
+												styleClass="main_color margin_left25"/>
+								<ice:outputText rendered="#{backingBean.checkPhone == 0}"
+												value="#{msgs.regi_phone_not_null}"
+												styleClass="red_text margin_left25"/>
 							</td>
 						</tr>
 						<tr>
@@ -64,12 +123,10 @@
 								<ice:outputText value="#{msgs.regi_genda}"/>
 							</td>
 							<td>
-								<ice:menuBar>
-									<ice:menuItem>
-										<ice:menuItem value="#{msgs.regi_genda_male}"/>
-										<ice:menuItem value="#{msgs.regi_genda_female}"/>
-									</ice:menuItem>
-								</ice:menuBar>
+								<ice:selectOneRadio value="#{backingBean.usergenda}" partialSubmit="true">
+									<f:selectItem itemLabel="#{msgs.regi_genda_male}" itemValue="1"/>
+									<f:selectItem itemLabel="#{msgs.regi_genda_female}" itemValue="0"/>
+								</ice:selectOneRadio>
 							</td>
 						</tr>
 						<tr>
@@ -77,7 +134,18 @@
 								<ice:outputText value="#{msgs.regi_address}"/>
 							</td>
 							<td>
-								<ice:inputTextarea styleClass="not_resize form-control input-sm" value="#{backingBean.useraddress}"/>
+								<ice:inputTextarea styleClass="not_resize form-control input-sm" 
+												   value="#{backingBean.useraddress}"
+												   validator="#{backingBean.validateAddress}"
+												   partialSubmit="true"/>
+							</td>
+							<td>
+								<ice:outputText rendered="#{backingBean.checkAddress == 1}"
+												value="#{msgs.regi_ok_text}"
+												styleClass="main_color margin_left25"/>
+								<ice:outputText rendered="#{backingBean.checkAddress == 0}"
+												value="#{msgs.regi_address_not_nll}"
+												styleClass="red_text margin_left25"/>
 							</td>
 						</tr>
 					</table>
